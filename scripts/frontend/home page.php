@@ -18,7 +18,7 @@
     <!-- Logo -->
     <div class="container-fluid">
       <a class="navbar-brand" href="#">
-        <img src="./src/logo.png" width="100px">
+        <img src="../src/logo.png" width="100px">
       </a>
 
       <!-- Menu section -->

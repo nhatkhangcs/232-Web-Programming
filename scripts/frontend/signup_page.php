@@ -8,53 +8,51 @@
   <link rel="stylesheet" type="text/css" href="../styles/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="validate_signup.js" ></script>
 
 </head>
-<body style="height: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center; ">
+<body>
 <!-- <div class="container" style="border: 5px solid red;">
     <p class="fw-bold fs-2 mx-auto text-center">Login into your account</p>    
 </div> -->
 <!-- <img src="../src/home_icon.png" width="15px" class="mx-auto d-block mt-5"> -->
 <div class="container">
-    <div class="position-absolute top-15 start-10">
+    <div class="position-absolute top-15 start-10 pt-3">
         <a href="./home page.php">
             <img src="../src/home_icon.png" width="40px" class="mx-auto d-block mt-1">
         </a>
     </div>
-    <p class="fw-bold fs-2 mx-auto text-center mb-3">Sign up for a new account</p>  
-    <div class="login-container w-50 mx-auto">
+    <p class="fw-bold fs-2 mx-auto text-center pt-3 mb-3">Sign up for a new account</p>  
+    <div class="login-container mx-auto">
         <div class="card mb-4" style="border: 2px solid blue; border-radius: 15px;">
             <div class="mx-auto mt-3">
                 <img src="../src/logo.png" width="150px">
             </div>
             <div class="card-body px-5">
-            <form action="signup.php" method="post">
-                <div class="form-group">
+            <form action="signup.php" method="post" onsubmit="return validateForm()">
+                <div class="mb-2">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" id="name" name="name" required>
                 </div>
-                <div class="form-group">
+                <div class="mb-2">
                     <label for="role">Role</label>
                     <select class="form-control" id="role" name="role" required>
                         <option value="Student">Student</option>
                         <option value="Teacher">Teacher</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="mb-2">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" required>
                 </div>
-                <div class="form-group">
+                <div class="mb-2">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                <div class="form-group">
+                <div class="mb-2">
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                    <small id="passwordError" class="text-danger d-none">Passwords do not match.</small>
                 </div>
 
                     <div class="d-grid gap-2 mt-4">

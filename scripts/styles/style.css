@@ -290,3 +290,7 @@ body{
     color: #737373;
     font-size: 13px;
 }
+
+.login-container {
+    max-width: 500px;
+}

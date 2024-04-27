@@ -220,6 +220,12 @@
                 const dropdown = filterSection.querySelector('.filter-dropdown');
                 const filterValue = filterSection.querySelector('.filter-value');
                 setupDropdown(filterSection, dropdown, filterValue);
+
+                // Set default filter value to 'All' or 'All time' based on the filter
+                if (!filterValue.textContent.trim()) {
+                    const defaultOption = dropdown.querySelector('.dropdown-option[data-value="All"]');
+                    filterValue.textContent = defaultOption ? defaultOption.textContent : 'All';
+                }
             });
 
             // Handle course item option dropdowns
@@ -243,17 +249,18 @@
                             otherDropdown.style.display = 'none';
                         }
                     });
-
-                    // For filter dropdowns, update the displayed value
-                    if (filterValue) {
-                        dropdown.querySelectorAll('.dropdown-option').forEach(function (item) {
-                            item.addEventListener('click', function () {
-                                filterValue.textContent = this.textContent;
-                                dropdown.style.display = 'none'; // Close dropdown after selection
-                            });
-                        });
-                    }
                 });
+
+                // For filter dropdowns, update the displayed value
+                if (filterValue) {
+                    dropdown.querySelectorAll('.dropdown-option').forEach(function (item) {
+                        item.addEventListener('click', function (event) {
+                            event.stopPropagation(); // Prevent the click from propagating to the document
+                            filterValue.textContent = this.textContent;
+                            dropdown.style.display = 'none'; // Close dropdown after selection
+                        });
+                    });
+                }
             }
 
             // Clicking outside any dropdown should close all dropdowns

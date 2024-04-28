@@ -37,7 +37,7 @@ body{
 
 .page-container{
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     display: flex;
     background-color: #F4F4F4;
 }
@@ -45,7 +45,7 @@ body{
 /* sidebar */
 .sidebar{
     width: 250px;
-    height:100%;
+    min-height:100%;
     background-color: white;
     margin:0;
 }
@@ -291,6 +291,55 @@ body{
     font-size: 13px;
 }
 
+/* login */
 .login-container {
     max-width: 500px;
+}
+
+/* preview */
+.view-mode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #737373;
+} 
+
+.btn-item-icon {
+    color: white;
+}
+
+.button_content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    max-height: 20px;
+}
+
+.d-flex div p {
+    display: inline-block; /* or inline */
+    margin: 0; /* Remove any default margin */
+}
+
+/* do test */
+.do_test_overview {
+    display: flex;
+    max-width: 370px;
+}
+
+.box {
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+    border: 2px solid rgb(72, 60, 233);
+    display: inline-block;
+    margin: 4px;
+    text-align: center;
+    line-height: 21px;
+    color: rgb(72, 60, 233);
+}
+
+.checked {
+    background-color: rgb(72, 60, 233);
+    color: white;
 }

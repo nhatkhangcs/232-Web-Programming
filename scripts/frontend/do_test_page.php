@@ -55,9 +55,9 @@
             <!-- <input type="checkbox" onclick="changeColor(1)"> Check 1<br>
             <input type="checkbox" onclick="changeColor(2)"> Check 2<br> -->
                 <button class="btn btn-outline-primary me-3" style="border-radius: 12px;">
-                    <p class="button_content mb-0 mx-1 fw-bold" style="color:blue;">Cancel</p>
+                    <p class="button_content-2 mb-0 mx-1 fw-bold">Cancel</p>
                 </button>
-                <button class="btn btn-primary" style="border-radius: 12px;">
+                <button class="btn btn-primary" style="border-radius: 12px;" onclick="handleSubmission()">
                     <p class="button_content mb-0 mx-1 fw-bold">Submit</p>
                 </button>
             </div>

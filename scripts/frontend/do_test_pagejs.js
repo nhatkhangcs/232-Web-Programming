@@ -20,6 +20,49 @@ function changeColor(index) {
     }
 }
 
+function startTimer(testId, countdownIntervalMinutes) {
+    // Calculate the target date and time
+    const targetDate = new Date();
+    targetDate.setMinutes(targetDate.getMinutes() + countdownIntervalMinutes);
+
+    // Store the target time in local storage with a key that includes the test ID
+    localStorage.setItem(`targetTime_${testId}`, targetDate.getTime());
+
+    // Update the countdown every second
+    const countdownInterval = setInterval(function() {
+        // Get the current date and time
+        const now = new Date().getTime();
+        
+        // Get the stored target time from local storage based on the test ID
+        const storedTargetTime = localStorage.getItem(`targetTime_${testId}`);
+
+        // Calculate the time remaining
+        const timeRemaining = storedTargetTime - now;
+        
+        // Check if the countdown is over
+        if (timeRemaining <= 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('time-left').textContent = 'Time Over';
+            localStorage.removeItem(`targetTime_${testId}`);
+        } else {
+            // Calculate minutes and seconds
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+            
+            // Update the countdown display
+            document.getElementById('time-left').textContent = `Time left: ${minutes}:${seconds}`;
+        }
+    }, 1000); // Update every second
+}
+
+function handleSubmission() {
+    // Get the test ID
+    const testId = 1; // Replace '1' with the actual test ID
+    localStorage.removeItem(`targetTime_${testId}`);
+    const previewUrl = `result_page.php?takentestid=${testId}`;
+    window.location.href = previewUrl;
+};
+
 $(document).ready(function() {
     // Make AJAX request to get test data
     $.ajax({
@@ -81,33 +124,20 @@ $(document).ready(function() {
                 }
             });
             // Set the countdown interval (in minutes)
-        const countdownIntervalMinutes = 45;
+            const testId = 1; 
+            const defaultCountdownInterval = 45;
 
-        // Calculate the target date and time
-        const targetDate = new Date();
-        targetDate.setMinutes(targetDate.getMinutes() + countdownIntervalMinutes);
+            const storedTargetTime = localStorage.getItem(`targetTime_${testId}`);
+            if (storedTargetTime) {
+                // Calculate the time remaining based on the stored target time
+                const timeRemaining = storedTargetTime - new Date().getTime();
 
-        // Update the countdown every second
-        const countdownInterval = setInterval(function() {
-            // Get the current date and time
-            const now = new Date().getTime();
-
-            // Calculate the time remaining
-            const timeRemaining = targetDate - now;
-
-            // Check if the countdown is over
-            if (timeRemaining <= 0) {
-                clearInterval(countdownInterval);
-                document.getElementById('time-left').textContent = 'Countdown Over';
+                // Start the countdown timer for the specific test regardless of whether there is time remaining or not
+                startTimer(testId, Math.floor(timeRemaining / (1000 * 60))); // Convert milliseconds to minutes
             } else {
-                // Calculate minutes and seconds
-                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-                // Update the countdown display
-                document.getElementById('time-left').textContent = `Time left: ${minutes}:${seconds}`;
+                // If there is no stored target time, start the countdown timer for the specific test with the default interval
+                startTimer(testId, defaultCountdownInterval); // Replace 'defaultCountdownInterval' with your default interval value
             }
-        }, 1000); // Update every second
 
         },
         error: function(xhr, status, error) {

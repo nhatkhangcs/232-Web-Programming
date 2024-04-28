@@ -343,3 +343,22 @@ body{
     background-color: rgb(72, 60, 233);
     color: white;
 }
+
+/* result test */
+.result-color {
+    color: #28a745;
+}
+
+.button_content-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 20px;
+}
+
+.result_param {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #5e5e5e;
+}

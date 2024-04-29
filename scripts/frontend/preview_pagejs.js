@@ -6,6 +6,7 @@ $(document).ready(function() {
         dataType: 'json', // Specify the expected data type
         success: function(data) {
             // Display test information
+            $('#testNameNav').text(data.testname);
             $('#testName').text(data.testname);
             $('#testDescription').text(data.description);
             $('#testDuration').text(data.timelimit);

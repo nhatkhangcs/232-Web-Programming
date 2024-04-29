@@ -73,12 +73,17 @@ function handleCancel() {
 
 $(document).ready(function() {
     // Make AJAX request to get test data
+    var url_string = window.location;
+    var url = new URL(url_string);
+    var testId = url.searchParams.get("testid");
     $.ajax({
         type: 'GET',
-        url: './sampledata/tests.php',
+        url: `./sampledata/tests.php?testid=${testId}`,
         dataType: 'json', // Specify the expected data type
         success: function(data) {
             // Display test information
+            console.log(data);
+            $('#courseName').text(data.coursename);
             $('#testName').text(data.testname);
             $('#testDescription').text(data.description);
             $('#testDuration').text(data.timelimit);

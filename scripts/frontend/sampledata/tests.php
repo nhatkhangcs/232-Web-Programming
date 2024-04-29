@@ -1,5 +1,7 @@
 <?php
 $testData = array(
+    "coursename" => "Mathematics",
+    "courseid" => 123,
     "testname" => "Sample Test Name",
     "description" => "Sample Test Information",
     "timelimit" => "60 minutes",

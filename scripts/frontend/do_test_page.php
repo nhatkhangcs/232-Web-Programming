@@ -19,7 +19,12 @@
 
         <!-- header title -->
             <div class="header-title">
-                <div id="testName">No test found!</div>
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb mt-3">
+                    <li class="breadcrumb-item"><a id="courseName" href="#">Course</a></li>
+                    <li id="testName" class="breadcrumb-item active" aria-current="page">Test</li>
+                  </ol>
+                </nav>
             </div>
             <!-- User avatar -->
             <div class="user-avatar">

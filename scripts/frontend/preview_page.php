@@ -85,7 +85,12 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col ps-3">
-                                <p>test</p>
+                                <nav aria-label="breadcrumb">
+                                  <ol class="breadcrumb mb-0 mt-2">
+                                    <li class="breadcrumb-item"><a href="#">Course</a></li>
+                                    <li id="testNameNav" class="breadcrumb-item active" aria-current="page">Test</li>
+                                  </ol>
+                                </nav>
                             </div>
                             <div class="view-mode col">
                                 <i class="material-icons dashboard-item-icon-2 fs-4">visibility</i>

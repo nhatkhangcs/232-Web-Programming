@@ -83,13 +83,18 @@
             <!-- page content -->
             <div class="content-block shadow" style="height: fit-content;">
                 <div class="card">
-                    <div class="card-header pb-0">
+                    <div class="card-header">
                         <div class="row">
                             <div class="col ps-3">
-                                <p>test</p>
+                                <nav aria-label="breadcrumb">
+                                  <ol class="breadcrumb mb-0 mt-1">
+                                    <li class="breadcrumb-item"><a id="courseNameNav" href="#">Course</a></li>
+                                    <li id="testNameNav" class="breadcrumb-item active" aria-current="page">Test</li>
+                                  </ol>
+                                </nav>
                             </div>
                             <div class="view-mode col">
-                                <p class="fw-bold result-color mb-2">Result</p>
+                                <p class="fw-bold result-color mb-1">Result</p>
                             </div>
                             <div class="col text-sm-end">
                                 <button class="btn btn-outline-primary" onclick="window.location.href='review_page.php?takentestid=1'"> 

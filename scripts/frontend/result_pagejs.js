@@ -7,6 +7,9 @@ $(document).ready(function() {
         success: function(data) {
             // Display test information
             console.log(data);
+            $('#testNameNav').text(data.test_name);
+            $('#courseNameNav').text(data.course_name);
+
             var time_taken = data.time_taken;
             var totalQuestions = data.totalquestion;
             var rightAnswers = data.rightanswer;

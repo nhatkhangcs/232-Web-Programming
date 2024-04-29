@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="result_pagejs.js"></script>
+    <script src="review_pagejs.js"></script>
 </head>
 
 <body>
@@ -81,25 +80,27 @@
             </div>
 
             <!-- page content -->
-            <div class="content-block shadow" style="height: fit-content;">
+            <div class="content-block shadow">
                 <div class="card">
-                    <div class="card-header pb-0">
+                    <div class="card-header">
                         <div class="row">
-                            <div class="col ps-3">
-                                <p>test</p>
+                            <div class="col ps-3 mt-2">
+                                <a class="result-color text-decoration-none fw-bold" href="result_page.php?takentestid=1"> 
+                                    <div class="review-question result-color">
+                                        <i class="material-icons">arrow_back_ios</i>
+                                        Result
+
+                                    </div> 
+                                </a>
                             </div>
                             <div class="view-mode col">
-                                <p class="fw-bold result-color mb-2">Result</p>
+                                <i class="material-icons dashboard-item-icon-2 fs-4">visibility</i>
+                                Review
                             </div>
                             <div class="col text-sm-end">
-                                <button class="btn btn-outline-primary" onclick="window.location.href='review_page.php?takentestid=1'"> 
-                                    <div class="button_content-2">
-                                    <i class="material-icons fs-5 me-1">visibility</i> Review
-                                    </div>
-                                </button>
-                                <button class="btn btn-primary" onclick="window.location.href='do_test_page.php?testid=1'"> 
+                                <button class="btn btn-primary mt-1" onclick="window.location.href='do_test_page.php?testid=1'"> 
                                     <div class="button_content">
-                                    <i class="material-icons btn-item-icon fs-5 me-1">play_circle</i> Do again
+                                    <i class="material-icons btn-item-icon fs-5 me-1">ios_share</i> Export
                                     </div>
                                 </button>
                             </div>
@@ -109,23 +110,21 @@
                         <div class="container text-center">
                             <p class="fw-bold fs-3 mb-2" id="courseName">Sample course name</p>
                             <p class="fw-bold me-1 d-inline fs-5">Test:</p><p class="d-inline fs-5" id="testName">Test</p>
-                        </div>
-                        <div class="container ps-5 d-flex mb-5 px-0">
-                            <canvas id="doughnutChart" width="400" height="400"></canvas>
-                            <div class="result_param mx-auto">
-                                <div class="fs-5">
-                                    <p class="fw-bold me-1 mb-2">Total point:</p><p id="totalPoint">Not available</p>
+                            <div class="d-flex justify-content-evenly mx-5 mt-2 mb-2">
+                                <div>
+                                    <p class="fw-bold me-1">Time:</p><p id="testDuration">Duration</p>
                                 </div>
-                                <div class="fs-5">
-                                    <p class="fw-bold me-1 mb-2">Correct answer:</p><p id="correctAns">Not available</p>
+                                <div>
+                                    <p class="fw-bold me-1">Total questions:</p><p id="totalQuestions">100</p>
                                 </div>
-                                <div class="fs-5">
-                                    <p class="fw-bold me-1 mb-2">Completion time:</p><p id="timeTaken">Not available</p>
+                                <div>
+                                    <p class="fw-bold me-1">Total point:</p><p id="totalPoint">10</p>
                                 </div>
                             </div>
                         </div>
-
-                        
+                        <div class="container">
+                            <div id="taken_questions"></div>
+                        </div>
                     </div>
                 </div>
             </div>

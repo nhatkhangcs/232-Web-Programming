@@ -362,3 +362,8 @@ body{
     justify-content: center;
     color: #5e5e5e;
 }
+
+.review-question {
+    display: flex;
+    align-items: center;
+}

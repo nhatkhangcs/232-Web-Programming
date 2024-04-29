@@ -2,7 +2,7 @@ $(document).ready(function() {
     // Make AJAX request to get test data
     $.ajax({
         type: 'GET',
-        url: './sampledata/takentests.php',
+        url: './sampledata/takentests.php?takentestid=1&review=false',
         dataType: 'json', // Specify the expected data type
         success: function(data) {
             // Display test information

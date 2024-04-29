@@ -54,7 +54,7 @@
             <div class="card-footer bg-body mb-3 d-flex justify-content-center">
             <!-- <input type="checkbox" onclick="changeColor(1)"> Check 1<br>
             <input type="checkbox" onclick="changeColor(2)"> Check 2<br> -->
-                <button class="btn btn-outline-primary me-3" style="border-radius: 12px;">
+                <button class="btn btn-outline-primary me-3" style="border-radius: 12px;" onclick="handleCancel()">
                     <p class="button_content-2 mb-0 mx-1 fw-bold">Cancel</p>
                 </button>
                 <button class="btn btn-primary" style="border-radius: 12px;" onclick="handleSubmission()">

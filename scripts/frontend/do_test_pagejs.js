@@ -59,7 +59,15 @@ function handleSubmission() {
     // Get the test ID
     const testId = 1; // Replace '1' with the actual test ID
     localStorage.removeItem(`targetTime_${testId}`);
-    const previewUrl = `result_page.php?takentestid=${testId}`;
+    const previewUrl = `result_page.php?takentestid=${testId}&review=false`;
+    window.location.href = previewUrl;
+};
+
+function handleCancel() {
+    // Get the test ID
+    const testId = 1; // Replace '1' with the actual test ID
+    localStorage.removeItem(`targetTime_${testId}`);
+    const previewUrl = `preview_page.php?testid=${testId}`;
     window.location.href = previewUrl;
 };
 

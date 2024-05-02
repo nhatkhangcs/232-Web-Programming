@@ -1,0 +1,113 @@
+/* Basic Styles */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #f0f0f0;
+    padding: 20px 0;
+  }
+  
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Login Form Styles */
+  #login-form {
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-top: 30px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 15px;
+  }
+  
+  input[type="text"]:focus,
+  input[type="password"]:focus {
+    outline: none; /* Remove default outline */
+    border: 1px solid #ccc;
+    animation: focus-highlight 0.3s ease-in-out forwards;
+  }
+  
+  @keyframes focus-highlight {
+    from {
+      box-shadow: 0 0 0 2px transparent;
+    }
+    to {
+      box-shadow: 0 0 0 2px #4CAF50; /* Green highlight */
+    }
+  }
+  
+
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+  
+  input[type="submit"] {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #45A049; /* Green Hover */
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .container {
+      width: 90%;
+    }
+    h1 {
+      font-size: 1.5em;
+    }
+    label {
+      font-size: 0.8em;
+    }
+    input[type="text"],
+    input[type="password"] {
+      font-size: 0.9em;
+    }
+  }
+  
+  #login-form {
+    animation: slide-in 0.5s ease-in-out forwards;
+  }
+  
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

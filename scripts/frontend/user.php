@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>User Panel</title>
-    <link rel="stylesheet" type="text/css" href="../styles/style.css">
+    <link rel="stylesheet" type="text/css" href="../styles/styles.css">
 </head>
 <body>
     <header>

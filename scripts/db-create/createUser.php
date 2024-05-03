@@ -1,9 +1,6 @@
 <?php
 // Database connection settings
-$host = 'localhost';
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include 'db-config.php';
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -21,7 +18,7 @@ $sql = "CREATE TABLE IF NOT EXISTS Student (
     name VARCHAR(100),
     email VARCHAR(100) UNIQUE,
     profileImage VARCHAR(255),
-    testTaken TEXT -- Storing test IDs as JSON array
+    testTaken TEXT -- Storing takentest IDs as JSON array
 )";
 
 if (mysqli_query($conn, $sql)) {

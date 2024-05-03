@@ -1,9 +1,7 @@
 <?php
 // Database connection settings
-$host = 'localhost';
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include '../db-config.php';
+
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -14,18 +12,22 @@ if (!$conn) {
 }
 
 // Sample data for Teacher table
-$teacherData = [
-    ['teachername1', 'password1', 'Mr. Anderson', 'anderson@example.com', 'teacher_profile1.jpg', '[101, 103, 105]'],
-    ['teachername2', 'password2', 'Ms. Thompson', 'thompson@example.com', 'teacher_profile2.jpg', '[102, 104]'],
-    ['teachername3', 'password3', 'Dr. Smith', 'smith@example.com', 'teacher_profile3.jpg', '[101, 102, 103]'],
-    ['teachername4', 'password4', 'Mrs. Davis', 'davis@example.com', 'teacher_profile4.jpg', '[104, 105]'],
-    ['teachername5', 'password5', 'Prof. Wilson', 'wilson@example.com', 'teacher_profile5.jpg', '[101, 102, 104]']
-];
+$teacherData = array(
+    array("userName" => "teacher1", "password" => "password1", "name" => "John Doe", "email" => "john@example.com", "profileImage" => "profile1.jpg", "ownCourse" => json_encode([1])),
+    array("userName" => "teacher2", "password" => "password2", "name" => "Jane Smith", "email" => "jane@example.com", "profileImage" => "profile2.jpg", "ownCourse" => json_encode([2])),
+    array("userName" => "teacher3", "password" => "password3", "name" => "Alice Johnson", "email" => "alice@example.com", "profileImage" => "profile3.jpg", "ownCourse" => json_encode([3, 4])),
+    array("userName" => "teacher4", "password" => "password4", "name" => "Bob Brown", "email" => "bob@example.com", "profileImage" => "profile4.jpg", "ownCourse" => json_encode([5])),
+    array("userName" => "teacher5", "password" => "password5", "name" => "Emily Davis", "email" => "emily@example.com", "profileImage" => "profile5.jpg", "ownCourse" => json_encode([]))
+);
 
 // Insert sample data into Teacher table
 foreach ($teacherData as $teacher) {
+    $password_hash = password_hash($teacher['password'], PASSWORD_DEFAULT);
+    $ownCourse = json_decode($teacher['ownCourse']);
+    $ownCourseStr = json_encode($ownCourse);
+    
     $sql = "INSERT INTO Teacher (userName, password, name, email, profileImage, ownCourse) 
-            VALUES ('$teacher[0]', '$teacher[1]', '$teacher[2]', '$teacher[3]', '$teacher[4]', '$teacher[5]')";
+            VALUES ('$teacher[userName]', '$password_hash', '$teacher[name]', '$teacher[email]', '$teacher[profileImage]', '$ownCourseStr')";
 
     if (mysqli_query($conn, $sql)) {
         echo "Record inserted into Teacher table successfully<br>";

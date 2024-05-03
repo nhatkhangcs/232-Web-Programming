@@ -1,10 +1,13 @@
 $(document).ready(function() {
     // Make AJAX request to get test data
+    var testId = new URLSearchParams(window.location.search).get('testId');
+    testId = 7;
     $.ajax({
         type: 'GET',
-        url: './sampledata/tests.php',
+        url: '../backend/test/getTest.php?testid=' + testId + '&auth_key=your_valid_auth_key',
         dataType: 'json', // Specify the expected data type
         success: function(data) {
+            console.log(data);
             // Display test information
             $('#testNameNav').text(data.testname);
             $('#testName').text(data.testname);

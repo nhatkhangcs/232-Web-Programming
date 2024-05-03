@@ -1,9 +1,6 @@
 <?php
 // Database connection settings
-$host = 'localhost';
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include '../db-config.php';
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -24,8 +21,9 @@ $adminData = [
 
 // Insert sample data into Admin table
 foreach ($adminData as $admin) {
+    $password_hash = password_hash($admin[1], PASSWORD_DEFAULT);
     $sql = "INSERT INTO Admin (userName, password, name, email, profileImage) 
-            VALUES ('$admin[0]', '$admin[1]', '$admin[2]', '$admin[3]', '$admin[4]')";
+            VALUES ('$admin[0]', '$password_hash', '$admin[2]', '$admin[3]', '$admin[4]')";
 
     if (mysqli_query($conn, $sql)) {
         echo "Record inserted into Admin table successfully<br>";

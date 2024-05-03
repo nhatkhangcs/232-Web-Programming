@@ -1,9 +1,6 @@
 <?php
 // Database connection settings
-$host = 'localhost';
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include '../db-config.php';
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -14,11 +11,11 @@ if (!$conn) {
 }
 // Sample data for the Course table
 $courseData = array(
-    array('name' => 'Mathematics', 'teacherId' => 1, 'Test' => 4, 'description' => 'Basic mathematics course'),
-    array('name' => 'English Literature', 'teacherId' => 2, 'Test' => 3, 'description' => 'Introduction to English literature'),
-    array('name' => 'Computer Science', 'teacherId' => 3, 'Test' => 5, 'description' => 'Fundamentals of computer science'),
-    array('name' => 'History', 'teacherId' => 4, 'Test' => 3, 'description' => 'World history overview'),
-    array('name' => 'Physics', 'teacherId' => 5, 'Test' => 4, 'description' => 'Introduction to physics')
+    array("name" => "Mathematics", "teacherId" => 1, "Test" => json_encode([1]), "description" => "Introduction to mathematics"),
+    array("name" => "Physics", "teacherId" => 2, "Test" => json_encode([2]), "description" => "Introduction to physics"),
+    array("name" => "Biology", "teacherId" => 3, "Test" => json_encode([3]), "description" => "Introduction to biology"),
+    array("name" => "Chemistry", "teacherId" => 3, "Test" => json_encode([4,5]), "description" => "Introduction to chemistry"),
+    array("name" => "Computer Science", "teacherId" => 4, "Test" => json_encode([]), "description" => "Introduction to computer science")
 );
 
 // Insert sample data into the Course table

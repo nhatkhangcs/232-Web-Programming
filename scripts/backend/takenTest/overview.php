@@ -1,9 +1,6 @@
 <?php
 // Database connection settings
-$host = 'localhost'; // Change this if your database is hosted on a different server
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include '../../db-create/db-config.php';
 
 // Check if the request method is GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -43,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         // Prepare SQL query to fetch taken test overview
-        $sql = "SELECT COUNT(*) AS totalquestion, SUM(chosen = answer) AS rightanswer, timeTaken, testId FROM TakenQuestion INNER JOIN TakenTest ON TakenQuestion.takenTestId = TakenTest.takenTestId WHERE TakenTest.takenTestId = $takentestid GROUP BY TakenTest.takenTestId";
+        $sql = "SELECT COUNT(*) AS totalquestion, SUM(chosenOption = answer) AS rightanswer, timeTaken, testId FROM TakenQuestion INNER JOIN TakenTest ON TakenQuestion.takenTestId = TakenTest.takenTestId WHERE TakenTest.takenTestId = $takentestid GROUP BY TakenTest.takenTestId";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {

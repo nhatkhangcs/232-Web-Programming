@@ -1,9 +1,6 @@
 <?php
 // Database connection settings
-$host = 'localhost'; // Change this if your database is hosted on a different server
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include '../../db-create/db-config.php';
 
 // Check if the request method is GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
@@ -42,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         // Prepare SQL query to fetch test information based on testid
-        $sql = "SELECT name AS testname, description, timeCreated, timeLimit FROM Test WHERE testId = $testid";
+        $sql = "SELECT testname, description, timeCreated, timeLimit FROM Test WHERE testId = $testid";
 
         // Execute SQL query
         $result = mysqli_query($conn, $sql);

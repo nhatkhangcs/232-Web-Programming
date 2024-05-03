@@ -1,57 +1,5 @@
 <?php
-// Database connection settings
-$host = 'localhost'; // Change this if your database is hosted on a different server
-$dbname = 'nhatkhang';
-$username = 'root'; // Change this to your database username
-$password = '872003'; // Change this to your database password
-
-try {
-    // Establishing the database connection
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-
-    // Setting PDO to throw exceptions for error handling
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Prepare a SQL statement to create the TakenQuestion table if it doesn't exist
-    $createTakenQuestionSQL = "
-        CREATE TABLE IF NOT EXISTS TakenQuestion (
-            questionId INT AUTO_INCREMENT PRIMARY KEY,
-            takenQuestionId INT,
-            takenTestId INT,
-            chosen BOOLEAN,
-            chosenOption VARCHAR(255),
-            FOREIGN KEY (takenTestId) REFERENCES TakenTest(TakenTestId)
-        )";
-    
-    // Execute the SQL statement to create TakenQuestion table
-    $pdo->exec($createTakenQuestionSQL);
-    
-    // Prepare a SQL statement to create the TakenTest table if it doesn't exist
-    $createTakenTestSQL = "
-        CREATE TABLE IF NOT EXISTS TakenTest (
-            TakenTestId INT AUTO_INCREMENT PRIMARY KEY,
-            dateTaken VARCHAR(14), -- Format: ddmmyyhhmmss
-            studentId INT,
-            rightAnswer INT,
-            timeTaken INT,
-            FOREIGN KEY (studentId) REFERENCES Students(studentId)
-        )";
-    
-    // Execute the SQL statement to create TakenTest table
-    $pdo->exec($createTakenTestSQL);
-    
-    echo "Tables 'TakenQuestion' and 'TakenTest' created successfully.";
-
-} catch (PDOException $e) {
-    // Catch any database connection errors
-    echo "Connection failed: " . $e->getMessage();
-}
-?>
-<?php
-$host = 'localhost';
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include 'db-config.php';
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -63,13 +11,16 @@ if (!$conn) {
 ?>
 
 <?php
-$sql = "CREATE TABLE TakenTest (
-    testId INT AUTO_INCREMENT PRIMARY KEY,
+$sql = "CREATE TABLE IF NOT EXISTS TakenTest (
+    takenTestId INT AUTO_INCREMENT PRIMARY KEY,
+    testId INT,
     dateTaken VARCHAR(14), -- Format: ddmmyyhhmmss
     studentId INT,
     takenQuestion TEXT, -- Storing question IDs as JSON array
     rightAnswer INT,
-    timeTaken INT
+    timeTaken INT,
+    FOREIGN KEY (testId) REFERENCES Test(testId),
+    FOREIGN KEY (studentId) REFERENCES Student(studentId)
 )";
 
 if (mysqli_query($conn, $sql)) {
@@ -80,12 +31,13 @@ if (mysqli_query($conn, $sql)) {
 ?>
 
 <?php
-$sql = "CREATE TABLE TakenQuestion (
-    questionId INT AUTO_INCREMENT PRIMARY KEY,
-    testId INT,
-    chosen BOOLEAN,
+$sql = "CREATE TABLE IF NOT EXISTS TakenQuestion (
+    takenQuestionId INT AUTO_INCREMENT PRIMARY KEY,
+    questionId INT,
+    takenTestId INT,
     chosenOption VARCHAR(255),
-    FOREIGN KEY (testId) REFERENCES TakenTest(testId)
+    FOREIGN KEY (questionId) REFERENCES Question(questionId),
+    FOREIGN KEY (takenTestId) REFERENCES TakenTest(takenTestId)
 )";
 
 if (mysqli_query($conn, $sql)) {

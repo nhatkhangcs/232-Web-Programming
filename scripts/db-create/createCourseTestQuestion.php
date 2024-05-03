@@ -1,8 +1,5 @@
 <?php
-$host = 'localhost';
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include 'db-config.php';
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -14,11 +11,11 @@ if (!$conn) {
 ?>
 
 <?php
-$sql = "CREATE TABLE Course (
-    CourseId INT AUTO_INCREMENT PRIMARY KEY,
+$sql = "CREATE TABLE IF NOT EXISTS Course (
+    courseId INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     teacherId INT,
-    Test INT,
+    Test TEXT, -- Storing Test IDs as JSON array
     description TEXT,
     timeCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
@@ -31,13 +28,15 @@ if (mysqli_query($conn, $sql)) {
 ?>
 
 <?php
-$sql = "CREATE TABLE Test (
+$sql = "CREATE TABLE IF NOT EXISTS Test (
     testId INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    courseId INT,
     description TEXT,
     question TEXT, -- Storing question IDs as JSON array
     timeLimit INT,
     timeCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (testId) REFERENCES Course(Test)
+    FOREIGN KEY (courseId) REFERENCES Course(courseId)
 )";
 
 if (mysqli_query($conn, $sql)) {
@@ -48,7 +47,7 @@ if (mysqli_query($conn, $sql)) {
 ?>
 
 <?php
-$sql = "CREATE TABLE Question (
+$sql = "CREATE TABLE IF NOT EXISTS Question (
     questionId INT AUTO_INCREMENT PRIMARY KEY,
     testId INT,
     image VARCHAR(255), -- Assuming image path is stored

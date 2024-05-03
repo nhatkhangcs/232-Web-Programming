@@ -1,9 +1,7 @@
 <?php
 // Database connection settings
-$host = 'localhost';
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include '../db-config.php';
+
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -15,17 +13,22 @@ if (!$conn) {
 
 // Sample data for Student table
 $studentData = [
-    ['username1', 'password1', 'John Doe', 'john@example.com', 'profile1.jpg', '[1, 3, 5]'],
-    ['username2', 'password2', 'Jane Smith', 'jane@example.com', 'profile2.jpg', '[2, 4]'],
-    ['username3', 'password3', 'Michael Johnson', 'michael@example.com', 'profile3.jpg', '[1, 2, 3]'],
-    ['username4', 'password4', 'Emily Brown', 'emily@example.com', 'profile4.jpg', '[4, 5]'],
-    ['username5', 'password5', 'David Wilson', 'david@example.com', 'profile5.jpg', '[1, 2, 4]']
+    array("userName" => "student7", "password" => "password1", "name" => "John Doe", "email" => "john@example.com", "profileImage" => "profile1.jpg", "testTaken" => json_encode([1])),
+    array("userName" => "student8", "password" => "password2", "name" => "Jane Smith", "email" => "jane@example.com", "profileImage" => "profile2.jpg", "testTaken" => json_encode([2])),
+    array("userName" => "student9", "password" => "password3", "name" => "Michael Johnson", "email" => "michael@example.com", "profileImage" => "profile3.jpg", "testTaken" => json_encode([3, 4])),
+    array("userName" => "student10", "password" => "password4", "name" => "Emily Brown", "email" => "emily@example.com", "profileImage" => "profile4.jpg", "testTaken" => json_encode([5])),
+    array("userName" => "student11", "password" => "password5", "name" => "David Wilson", "email" => "david@example.com", "profileImage" => "profile5.jpg", "testTaken" => json_encode([]))
 ];
 
 // Insert sample data into Student table
 foreach ($studentData as $student) {
+    $password_hash = password_hash($student['password'], PASSWORD_DEFAULT);
+    $testTaken = json_decode($student['testTaken']);
+    $testTakenStr = json_encode($testTaken);
+    
     $sql = "INSERT INTO Student (userName, password, name, email, profileImage, testTaken) 
-            VALUES ('$student[0]', '$student[1]', '$student[2]', '$student[3]', '$student[4]', '$student[5]')";
+            VALUES ('$student[userName]', '$password_hash', '$student[name]', '$student[email]', '$student[profileImage]', '$testTakenStr')";
+            
 
     if (mysqli_query($conn, $sql)) {
         echo "Record inserted into Student table successfully<br>";

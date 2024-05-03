@@ -1,9 +1,6 @@
 <?php
 // Database connection settings
-$host = 'localhost'; // Change this if your database is hosted on a different server
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include '../../db-create/db-config.php';
 
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

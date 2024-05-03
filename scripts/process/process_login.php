@@ -5,10 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $role = $_POST['role'];
 
     // Database connection settings
-    $host = 'localhost'; // Change this if your database is hosted on a different server
-    $dbname = 'nhatkhang';
-    $username = 'root'; // Change this to your database username
-    $password = '872003'; // Change this to your database password
+    include '../db-create/db-config.php';
 
     try {
         // Establishing the database connection

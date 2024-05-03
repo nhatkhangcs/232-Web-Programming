@@ -1,9 +1,7 @@
 <?php
 // Database connection settings
-$host = 'localhost';
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+include '../db-config.php';
+
 
 // Create connection
 $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -14,20 +12,21 @@ if (!$conn) {
 }
 // Sample data for the TakenQuestion table
 $takenQuestionData = array(
-    array('testId' => 1, 'chosen' => true, 'chosenOption' => 'optionA'),
-    array('testId' => 1, 'chosen' => false, 'chosenOption' => ''),
-    array('testId' => 2, 'chosen' => true, 'chosenOption' => 'optionC'),
-    array('testId' => 2, 'chosen' => true, 'chosenOption' => 'optionB'),
-    array('testId' => 3, 'chosen' => true, 'chosenOption' => 'optionD')
+    array("questionId" => 1, "takenTestId" => 1, "chosenOption" => "Option A"),
+    array("questionId" => 2, "takenTestId" => 1, "chosenOption" => "Option B"),
+    array("questionId" => 3, "takenTestId" => 1, "chosenOption" => ""),
+    array("questionId" => 4, "takenTestId" => 1, "chosenOption" => "Option D"),
+    array("questionId" => 5, "takenTestId" => 1, "chosenOption" => "Option A")
 );
 
 // Insert sample data into the TakenQuestion table
-foreach ($takenQuestionData as $takenQuestion) {
-    $testId = $takenQuestion['testId'];
-    $chosen = $takenQuestion['chosen'] ? 1 : 0; // Convert boolean to integer
-    $chosenOption = $takenQuestion['chosenOption'];
+foreach ($takenQuestionData as $data) {
+    $questionId = $data['questionId'];
+    $takenTestId = $data['takenTestId'];
+    $chosenOption = $data['chosenOption'];
 
-    $sql = "INSERT INTO TakenQuestion (testId, chosen, chosenOption) VALUES ('$testId', '$chosen', '$chosenOption')";
+    $sql = "INSERT INTO TakenQuestion (questionId, takenTestId, chosenOption) VALUES ('$questionId', '$takenTestId', '$chosenOption')";
+
     if (mysqli_query($conn, $sql)) {
         echo "Sample data inserted into TakenQuestion table successfully<br>";
     } else {

@@ -50,7 +50,11 @@ function startTimer(testId, countdownIntervalMinutes) {
             const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
             
             // Update the countdown display
+            if (seconds < 10) {
+                document.getElementById('time-left').textContent = `Time left: ${minutes}:0${seconds}`;
+            } else {
             document.getElementById('time-left').textContent = `Time left: ${minutes}:${seconds}`;
+            }
         }
     }, 1000); // Update every second
 }
@@ -76,9 +80,11 @@ $(document).ready(function() {
     var url_string = window.location;
     var url = new URL(url_string);
     var testId = url.searchParams.get("testid");
+    var settimelimit = 60;
+    testId = 1;
     $.ajax({
         type: 'GET',
-        url: `./sampledata/tests.php?testid=${testId}`,
+        url: '../backend/test/getTest.php?testid=' + testId + '&auth_key=your_valid_auth_key',
         dataType: 'json', // Specify the expected data type
         success: function(data) {
             // Display test information
@@ -87,10 +93,14 @@ $(document).ready(function() {
             $('#testName').text(data.testname);
             $('#testDescription').text(data.description);
             $('#testDuration').text(data.timelimit);
+            settimelimit = data.timelimit;
+
+            var QtestId = url.searchParams.get("testid");
+            QtestId = 1;
 
             $.ajax({
                 type: 'GET',
-                url: './sampledata/questions.php',
+                url: '../backend/question/getQuestion.php?testid=' + QtestId + '&answer=true&auth_key=your_valid_auth_key',
                 dataType: 'json', // Specify the expected data type
                 success: function(questionsData) {
                     // Display total questions count
@@ -138,7 +148,8 @@ $(document).ready(function() {
             });
             // Set the countdown interval (in minutes)
             const testId = 1; 
-            const defaultCountdownInterval = 45;
+            const defaultCountdownInterval = parseInt(settimelimit);
+            console.log(typeof defaultCountdownInterval);
 
             const storedTargetTime = localStorage.getItem(`targetTime_${testId}`);
             if (storedTargetTime) {

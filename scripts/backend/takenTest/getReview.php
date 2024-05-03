@@ -5,9 +5,9 @@ include '../../db-create/db-config.php';
 // Check if the request method is GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // Check if the required parameter 'auth_key' is set in the request headers
-    if (isset($_SERVER['HTTP_AUTH_KEY'])) {
+    if (isset($_GET['auth_key'])) {
         // Extract the auth_key from the request headers
-        $auth_key = $_SERVER['HTTP_AUTH_KEY'];
+        $auth_key = $_GET['auth_key'];
 
         // Check if the auth_key is valid (you should implement your own authentication mechanism)
         // For example, you can compare the auth_key with a stored key in your database or a predefined key
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         // Prepare SQL query to fetch taken test review
-        $sql = "SELECT Test.testname AS test_name, Test.testId AS testid, Course.coursename AS course_name, Course.courseId AS courseid, TakenTest.timeTaken, Test.timeLimit FROM TakenTest INNER JOIN Test ON TakenTest.testId = Test.testId INNER JOIN Course ON Test.courseId = Course.courseId WHERE TakenTest.takenTestId = $takentestid";
+        $sql = "SELECT Test.name AS test_name, Test.testId AS testid, Course.name AS course_name, Course.courseId AS courseid, TakenTest.timeTaken, Test.timeLimit FROM TakenTest INNER JOIN Test ON TakenTest.testId = Test.testId INNER JOIN Course ON Test.courseId = Course.courseId WHERE TakenTest.takenTestId = $takentestid";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {

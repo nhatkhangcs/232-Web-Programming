@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // Make AJAX request to get test data
     var testId = new URLSearchParams(window.location.search).get('testId');
-    testId = 7;
+    testId = 1;
     $.ajax({
         type: 'GET',
         url: '../backend/test/getTest.php?testid=' + testId + '&auth_key=your_valid_auth_key',
@@ -12,11 +12,11 @@ $(document).ready(function() {
             $('#testNameNav').text(data.testname);
             $('#testName').text(data.testname);
             $('#testDescription').text(data.description);
-            $('#testDuration').text(data.timelimit);
+            $('#testDuration').text(data.timelimit + ' minutes');
 
             $.ajax({
                 type: 'GET',
-                url: './sampledata/questions.php',
+                url: '../backend/question/getQuestion.php?testid=' + testId + '&answer=true&auth_key=your_valid_auth_key',
                 dataType: 'json', // Specify the expected data type
                 success: function(questionsData) {
                     // Display total questions count

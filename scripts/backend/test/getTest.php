@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         // Prepare SQL query to fetch test information based on testid
-        $sql = "SELECT testname, description, timeCreated, timeLimit FROM Test WHERE testId = $testid";
+        $sql = "SELECT name as testname, description, timeCreated, timeLimit FROM Test WHERE testId = $testid";
 
         // Execute SQL query
         $result = mysqli_query($conn, $sql);

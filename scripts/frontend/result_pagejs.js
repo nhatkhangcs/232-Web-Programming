@@ -1,8 +1,10 @@
 $(document).ready(function() {
     // Make AJAX request to get test data
+    var takentestid = new URLSearchParams(window.location.search).get('takentestid');
+    takentestid = 1;
     $.ajax({
         type: 'GET',
-        url: './sampledata/takentests.php?takentestid=1&review=false',
+        url: '../backend/takenTest/getReview.php?takentestid=' + takentestid + '&review=false&auth_key=your_valid_auth_key',
         dataType: 'json', // Specify the expected data type
         success: function(data) {
             // Display test information

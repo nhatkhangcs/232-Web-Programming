@@ -12,11 +12,11 @@ if (!$conn) {
 }
 // Sample data for the TakenQuestion table
 $takenQuestionData = array(
-    array("questionId" => 1, "takenTestId" => 1, "chosenOption" => "Option A"),
-    array("questionId" => 2, "takenTestId" => 1, "chosenOption" => "Option B"),
+    array("questionId" => 1, "takenTestId" => 1, "chosenOption" => "optionA"),
+    array("questionId" => 2, "takenTestId" => 1, "chosenOption" => "optionB"),
     array("questionId" => 3, "takenTestId" => 1, "chosenOption" => ""),
-    array("questionId" => 4, "takenTestId" => 1, "chosenOption" => "Option D"),
-    array("questionId" => 5, "takenTestId" => 1, "chosenOption" => "Option A")
+    array("questionId" => 4, "takenTestId" => 1, "chosenOption" => "optionD"),
+    array("questionId" => 5, "takenTestId" => 1, "chosenOption" => "optionA")
 );
 
 // Insert sample data into the TakenQuestion table

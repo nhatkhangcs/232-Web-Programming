@@ -17,7 +17,6 @@ $sql = "CREATE TABLE IF NOT EXISTS TakenTest (
     dateTaken VARCHAR(14), -- Format: ddmmyyhhmmss
     studentId INT,
     takenQuestion TEXT, -- Storing question IDs as JSON array
-    rightAnswer INT,
     timeTaken INT,
     FOREIGN KEY (testId) REFERENCES Test(testId),
     FOREIGN KEY (studentId) REFERENCES Student(studentId)

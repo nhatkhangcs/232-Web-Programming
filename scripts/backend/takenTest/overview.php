@@ -5,9 +5,9 @@ include '../../db-create/db-config.php';
 // Check if the request method is GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // Check if the required parameter 'auth_key' is set in the request headers
-    if (isset($_SERVER['HTTP_AUTH_KEY'])) {
+    if (isset($_GET['auth_key'])) {
         // Extract the auth_key from the request headers
-        $auth_key = $_SERVER['HTTP_AUTH_KEY'];
+        $auth_key = $_GET['auth_key'];
 
         // Check if the auth_key is valid (you should implement your own authentication mechanism)
         // For example, you can compare the auth_key with a stored key in your database or a predefined key
@@ -40,7 +40,21 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         // Prepare SQL query to fetch taken test overview
-        $sql = "SELECT COUNT(*) AS totalquestion, SUM(chosenOption = answer) AS rightanswer, timeTaken, testId FROM TakenQuestion INNER JOIN TakenTest ON TakenQuestion.takenTestId = TakenTest.takenTestId WHERE TakenTest.takenTestId = $takentestid GROUP BY TakenTest.takenTestId";
+        $sql = "SELECT 
+        COUNT(*) AS totalquestion, 
+        SUM(TakenQuestion.chosenOption = Question.answer) AS rightanswer, 
+        TakenTest.timeTaken, 
+        TakenTest.testId 
+    FROM 
+        TakenQuestion 
+    INNER JOIN 
+        TakenTest ON TakenQuestion.takenTestId = TakenTest.takenTestId 
+    INNER JOIN 
+        Question ON TakenQuestion.questionId = Question.questionId
+    WHERE 
+        TakenTest.takenTestId = $takentestid 
+    GROUP BY 
+        TakenTest.takenTestId;";
         $result = mysqli_query($conn, $sql);
 
         if (mysqli_num_rows($result) > 0) {
@@ -51,18 +65,18 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             $testId = $row['testId'];
 
             // Fetch additional information from the Test and Course tables
-            $sql_test = "SELECT testname, courseId FROM Test WHERE testId = $testId";
+            $sql_test = "SELECT name, courseId FROM Test WHERE testId = $testId";
             $result_test = mysqli_query($conn, $sql_test);
             if (mysqli_num_rows($result_test) > 0) {
                 $row_test = mysqli_fetch_assoc($result_test);
-                $test_name = $row_test['testname'];
+                $test_name = $row_test['name'];
                 $courseId = $row_test['courseId'];
 
-                $sql_course = "SELECT coursename FROM Course WHERE courseId = $courseId";
+                $sql_course = "SELECT name FROM Course WHERE courseId = $courseId";
                 $result_course = mysqli_query($conn, $sql_course);
                 if (mysqli_num_rows($result_course) > 0) {
                     $row_course = mysqli_fetch_assoc($result_course);
-                    $course_name = $row_course['coursename'];
+                    $course_name = $row_course['name'];
 
                     // Close database connection
                     mysqli_close($conn);

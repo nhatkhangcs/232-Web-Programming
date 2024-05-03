@@ -4,7 +4,7 @@ $(document).ready(function() {
     takentestid = 1;
     $.ajax({
         type: 'GET',
-        url: '../backend/takenTest/getReview.php?takentestid=' + takentestid + '&review=false&auth_key=your_valid_auth_key',
+        url: '../backend/takenTest/overview.php?takentestid=' + takentestid + '&review=false&auth_key=your_valid_auth_key',
         dataType: 'json', // Specify the expected data type
         success: function(data) {
             // Display test information

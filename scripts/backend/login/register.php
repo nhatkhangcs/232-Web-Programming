@@ -7,9 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the required parameters are set in the POST body
     if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['role'])) {
         // Extract the parameters from the POST body
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $role = $_POST['role'];
 
         // Establishing the database connection
         $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -21,16 +18,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        // Perform user registration
-        $sql = "INSERT INTO users (username, password, role) VALUES ('$username', '$password', '$role')";
-        if (mysqli_query($conn, $sql)) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $email = $_POST['email'];
+        $role = $_POST['role'];
+
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Check if the username is unique within its corresponding table
+        $table_name = $role; // Assuming table names are capitalized
+        $sql_check_username = "SELECT COUNT(*) as count FROM $table_name WHERE userName = '$username'";
+        $result = mysqli_query($conn, $sql_check_username);
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+
+        if ($count > 0) {
+            http_response_code(400);
+            echo json_encode(array("error" => "Username already exists!"));
+            header("Location: ../../frontend/signup_page.php?error=taken");
+            exit();
+        }
+
+        $sql_check_email = "SELECT COUNT(*) as count FROM $table_name WHERE email = '$email'";
+        $result = mysqli_query($conn, $sql_check_email);
+        $row = mysqli_fetch_assoc($result);
+        $count = $row['count'];
+
+        if ($count > 0) {
+            http_response_code(400);
+            echo json_encode(array("error" => "Email already exists!"));
+            header("Location: ../../frontend/signup_page.php?error=emailtaken");
+            exit();
+        }
+
+        // Insert the user into the appropriate table based on role
+        $sql_insert_user = "INSERT INTO $table_name (username, password, email) VALUES ('$username', '$hashed_password', '$email')";
+        if (mysqli_query($conn, $sql_insert_user)) {
             // Registration successful
-            http_response_code(200);
-            echo json_encode(array("success" => "User registered successfully"));
+            echo json_encode(array("message" => "User registered successfully"));
+            header("Location: ../../frontend/login_page.php");
         } else {
-            // Registration failed
             http_response_code(500);
-            echo json_encode(array("error" => "User registration failed"));
+            echo json_encode(array("error" => "Registration failed"));
         }
 
         // Close database connection

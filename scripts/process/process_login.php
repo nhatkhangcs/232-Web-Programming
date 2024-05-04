@@ -37,20 +37,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (password_verify($password, $user['password'])) {
                 // User authentication successful, redirect to respective dashboard
                 if ($role === 'teacher') {
+                    session_start();
+                    $_SESSION['role'] = 'teacher';
+                    $_SESSION['teacherid'] = $user['teacherId'];
                     header("Location: ../frontend/teacher_dashboard.php");
                 } elseif ($role === 'student') {
                     session_start();
                     $_SESSION['role'] = 'student';
                     $_SESSION['studentid'] = $user['studentId'];
-                    header("Location: ../frontend/do_test_page.php");
-                    // header("Location: ../frontend/student_dashboard.php");
+                    // header("Location: ../frontend/do_test_page.php");
+                    header("Location: ../frontend/student_dashboard.php");
                 } elseif ($role === 'admin') {
+                    session_start();
+                    $_SESSION['role'] = 'admin';
+                    $_SESSION['adminid'] = $user['adminId'];
                     header("Location: ../frontend/admin_dashboard.php");
                 }
                 exit();
             } else {
                 // User authentication failed, redirect back to login page with error message
-                header("Location: ../frontend/login.php?error=InvalidCredentials");
+                header("Location: ../frontend/login_page.php?error=invalid");
                 exit();
             }
         } else {

@@ -29,10 +29,10 @@
                 <img src="../src/logo.png" width="150px">
             </div>
             <div class="card-body px-5">
-            <form action="signup.php" method="post" onsubmit="return validateForm()">
+            <form action="../backend/login/register.php" method="post" onsubmit="return validateForm()">
                 <div class="mb-2">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" required>
                 </div>
                 <div class="mb-2">
                     <label for="role">Role</label>
@@ -54,6 +54,17 @@
                     <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
                     <small id="passwordError" class="text-danger d-none">Passwords do not match.</small>
                 </div>
+                <?php
+                    // Check if login failed error is present
+                    if (isset($_GET['error'])) {
+                        if ($_GET['error'] == 'taken') {
+                            echo '<p style="color: red; margin-top:10px;">This username is already taken!</p>';
+                        }
+                        if ($_GET['error'] == 'emailtaken') {
+                            echo '<p style="color: red; margin-top:10px;">This email is already taken!</p>';
+                        }
+                    }
+                ?>
 
                     <div class="d-grid gap-2 mt-4">
                         <button type="submit" class="btn btn-primary">Sign up</button>

@@ -80,6 +80,10 @@ function startTimer(testId, countdownIntervalMinutes) {
 
 function handleSubmission() {
     console.log("Submission button clicked");
+    if (testData.testid == -1) {
+        alert("Something went wrong. Please try again later.");
+        return;
+    }
     // Get the test ID
     const testId = 1; // Replace '1' with the actual test ID
     localStorage.removeItem(`targetTime_${testId}`);
@@ -88,6 +92,10 @@ function handleSubmission() {
 
 function sendToDB(timeTaken) {
     // Get the test ID
+    if (testData.studentid == -1) {
+        window.location.href = "preview_page.php?testid=" + testData.testid;
+        return;
+    }
     testData.time_taken = timeTaken;
     testData.taken_question = chosenOptions;
     console.log(testData);
@@ -128,7 +136,6 @@ $(document).ready(function() {
     var url = new URL(url_string);
     var testId = url.searchParams.get("testid");
     var settimelimit = 60;
-    testId = 1;
     testData.testid = testId;
     $.ajax({
         type: 'GET',

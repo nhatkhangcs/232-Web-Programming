@@ -49,6 +49,14 @@
                         </div>
                         <a href="#!">Forgot password?</a>
                     </div>
+                    <?php
+                        // Check if login failed error is present
+                        if (isset($_GET['error'])) {
+                            if ($_GET['error'] == 'invalid') {
+                                echo '<p style="color: red; margin-top:10px;">Invalid username or password!</p>';
+                            }
+                        }
+                    ?>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Login</button>
                     </div>

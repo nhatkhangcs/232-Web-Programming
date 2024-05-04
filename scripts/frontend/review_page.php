@@ -85,7 +85,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col ps-3 mt-2">
-                                <a class="result-color text-decoration-none fw-bold" href="result_page.php?takentestid=1"> 
+                                <a class="result-color text-decoration-none fw-bold" href="result_page.php?takentestid=<?php echo $_GET['takentestid']; ?>"> 
                                     <div class="review-question result-color">
                                         <i class="material-icons">arrow_back_ios</i>
                                         Result

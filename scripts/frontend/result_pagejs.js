@@ -14,6 +14,14 @@ $(document).ready(function() {
             $('#testNameNav').text(data.test_name);
             $('#courseNameNav').text(data.course_name);
 
+            $('#testName').text(data.test_name);
+            $('#courseName').text(data.course_name);
+
+            // do test again
+            document.getElementById('do_test_btn').onclick = function() {
+                window.location.href = `do_test_page.php?testid=${data.testid}`;
+            };
+
             var time_taken = data.time_taken;
             var totalQuestions = data.totalquestion;
             var rightAnswers = data.rightanswer;
@@ -22,7 +30,7 @@ $(document).ready(function() {
             var wrongPercentage = (wrongAnswers / totalQuestions) * 100;
             $('#totalPoint').text(`${(rightPercentage / 10).toFixed(2)}/10`);
             $('#correctAns').text(`${rightAnswers}/${totalQuestions}`);
-            $('#timeTaken').text(time_taken);
+            $('#timeTaken').text(`${time_taken} minutes`);
             // Display test information
             console.log("Total Questions:", totalQuestions);
             console.log("Right Answers:", rightAnswers);

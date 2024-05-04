@@ -102,7 +102,7 @@
                                     <i class="material-icons fs-5 me-1">visibility</i> Review
                                     </div>
                                 </button>
-                                <button class="btn btn-primary" onclick="window.location.href='do_test_page.php?testid=1'"> 
+                                <button id="do_test_btn" class="btn btn-primary" onclick="window.location.href='#'"> 
                                     <div class="button_content">
                                     <i class="material-icons btn-item-icon fs-5 me-1">play_circle</i> Do again
                                     </div>

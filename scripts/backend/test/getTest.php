@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         // Prepare SQL query to fetch test information based on testid
-        $sql = "SELECT name as testname, description, timeCreated, timeLimit FROM Test WHERE testId = $testid";
+        $sql = "SELECT name as testname, courseId, description, timeCreated, timeLimit FROM Test WHERE testId = $testid";
 
         // Execute SQL query
         $result = mysqli_query($conn, $sql);
@@ -50,6 +50,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
             // Check if test with given id exists
             if ($row) {
+                $coursename = "";
+                $sql_course = "SELECT name FROM Course WHERE courseId = " . $row['courseId'];
+                $result_course = mysqli_query($conn, $sql_course);
+                $coursename = mysqli_fetch_assoc($result_course)['name'];
+
                 // Fetch the questions associated with the test
                 $sql_questions = "SELECT questionId FROM Question WHERE testId = $testid";
                 $result_questions = mysqli_query($conn, $sql_questions);
@@ -62,6 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 // Construct the response
                 $response = array(
                     "testname" => $row['testname'],
+                    "coursename" => $coursename,
                     "description" => $row['description'],
                     "timeCreated" => $row['timeCreated'],
                     "timelimit" => $row['timeLimit'],

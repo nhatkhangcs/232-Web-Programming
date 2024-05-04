@@ -8,7 +8,8 @@ $(document).ready(function() {
         success: function(data) {
             // Display test information
             console.log(data);
-            $('#testName').text(data.testname);
+            $('#testName').text(data.test_name);
+            $('#courseName').text(data.course_name);
             $('#testDuration').text(data.timelimit);
             const questionsLength = data.taken_questions.length;
             $('#totalQuestions').text(questionsLength);

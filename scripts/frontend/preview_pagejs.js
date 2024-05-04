@@ -11,6 +11,8 @@ $(document).ready(function() {
             // Display test information
             $('#testNameNav').text(data.testname);
             $('#testName').text(data.testname);
+            $('#courseName').text(data.coursename);
+            $('#courseNameNav').text(data.coursename);
             $('#testDescription').text(data.description);
             $('#testDuration').text(data.timelimit + ' minutes');
 

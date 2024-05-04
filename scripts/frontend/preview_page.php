@@ -87,7 +87,7 @@
                             <div class="col ps-3">
                                 <nav aria-label="breadcrumb">
                                   <ol class="breadcrumb mb-0 mt-2">
-                                    <li class="breadcrumb-item"><a href="#">Course</a></li>
+                                    <li class="breadcrumb-item"><a id="courseNameNav" href="#">Course</a></li>
                                     <li id="testNameNav" class="breadcrumb-item active" aria-current="page">Test</li>
                                   </ol>
                                 </nav>

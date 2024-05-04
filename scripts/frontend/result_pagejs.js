@@ -1,7 +1,9 @@
 $(document).ready(function() {
     // Make AJAX request to get test data
     var takentestid = new URLSearchParams(window.location.search).get('takentestid');
-    takentestid = 1;
+    document.getElementById('review_page_btn').onclick = function() {
+        window.location.href = `review_page.php?takentestid=${takentestid}`;
+    };
     $.ajax({
         type: 'GET',
         url: '../backend/takenTest/overview.php?takentestid=' + takentestid + '&review=false&auth_key=your_valid_auth_key',

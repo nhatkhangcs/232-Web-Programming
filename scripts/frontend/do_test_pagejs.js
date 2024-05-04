@@ -1,3 +1,12 @@
+let testData = {
+    testid: -1,
+    studentid: parseInt(document.currentScript.getAttribute('studentid')),
+    time_taken: -1,
+    taken_question: {},
+};
+let chosenOptions = {};
+let time_taken = -1;
+
 function createBoxes(num) {
     var container = document.getElementById("question_box_container");
     console.log(container);
@@ -11,13 +20,15 @@ function createBoxes(num) {
 }
 
 // Function to change color of a box when checkbox is checked
-function changeColor(index) {
+function saveOption(index, option) {
     console.log("Radio button selected");
     var boxes = document.getElementsByClassName("box");
     var currentBox = boxes[index];
     if (!currentBox.classList.contains("checked")) {
         currentBox.classList.add("checked");
     }
+    const questionId = `question_${index + 1}`;
+    chosenOptions[questionId] = option;
 }
 
 function startTimer(testId, countdownIntervalMinutes) {
@@ -43,7 +54,13 @@ function startTimer(testId, countdownIntervalMinutes) {
         if (timeRemaining <= 0) {
             clearInterval(countdownInterval);
             document.getElementById('time-left').textContent = 'Time Over';
-            localStorage.removeItem(`targetTime_${testId}`);
+            if (localStorage.getItem(`targetTime_${testId}`) === null) {
+                return;
+            }
+            else {
+                localStorage.removeItem(`targetTime_${testId}`);
+                sendToDB(countdownIntervalMinutes);
+            }
         } else {
             // Calculate minutes and seconds
             const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
@@ -52,19 +69,49 @@ function startTimer(testId, countdownIntervalMinutes) {
             // Update the countdown display
             if (seconds < 10) {
                 document.getElementById('time-left').textContent = `Time left: ${minutes}:0${seconds}`;
+                time_taken = countdownIntervalMinutes - minutes;
             } else {
             document.getElementById('time-left').textContent = `Time left: ${minutes}:${seconds}`;
+            time_taken = countdownIntervalMinutes - minutes;
             }
         }
     }, 1000); // Update every second
 }
 
 function handleSubmission() {
+    console.log("Submission button clicked");
     // Get the test ID
     const testId = 1; // Replace '1' with the actual test ID
     localStorage.removeItem(`targetTime_${testId}`);
-    const previewUrl = `result_page.php?takentestid=${testId}&review=false`;
-    window.location.href = previewUrl;
+    sendToDB(time_taken);
+};
+
+function sendToDB(timeTaken) {
+    // Get the test ID
+    testData.time_taken = timeTaken;
+    testData.taken_question = chosenOptions;
+    console.log(testData);
+    $.ajax({
+        type: 'POST',
+        url: '../backend/takenTest/addTakenTest.php?auth_key=your_valid_auth_key',
+        data: JSON.stringify(testData),
+        success: function(data) {
+            // Display test information
+            let jsondata = JSON.parse(data);
+            const takentestid = jsondata.takentestid;
+            const previewUrl = `result_page.php?takentestid=${takentestid}&review=false`;
+            window.location.href = previewUrl;
+        },
+        error: function(xhr, status, error) {
+            console.error('Error sending test data:', error);
+        }
+    });
+    // if (takentestid == -1) {
+    //     return;
+    // } else {
+    //     const previewUrl = `result_page.php?takentestid=${takentestid}&review=false`;
+    //     window.location.href = previewUrl;
+    // }
 };
 
 function handleCancel() {
@@ -82,6 +129,7 @@ $(document).ready(function() {
     var testId = url.searchParams.get("testid");
     var settimelimit = 60;
     testId = 1;
+    testData.testid = testId;
     $.ajax({
         type: 'GET',
         url: '../backend/test/getTest.php?testid=' + testId + '&auth_key=your_valid_auth_key',
@@ -105,6 +153,10 @@ $(document).ready(function() {
                 success: function(questionsData) {
                     // Display total questions count
                     const questionsLength = questionsData.questions.length;
+                    for (let i = 0; i < questionsLength; i++) {
+                        const questionId = `question_${i + 1}`;
+                        chosenOptions[questionId] = "";
+                    }
                     $('#totalQuestions').text(questionsLength);
                     console.log(questionsData);
                     createBoxes(questionsLength);
@@ -117,13 +169,13 @@ $(document).ready(function() {
                                 <div class="card-body">
                                     <p class="fw-bold me-1 mb-0 d-inline">Question ${index + 1}:</p><div class="question d-inline">${question.question}</div>
                                     <div class="container ms-0 options">
-                                        <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" onchange="changeColor(${index})">
+                                        <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" onchange="saveOption(${index}, 'optionA')">
                                         <p class="fw-bold me-1 mb-0 d-inline">A.</p><div class="optionA d-inline">${question.optionA}</div><br>
-                                        <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" onchange="changeColor(${index})">
+                                        <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" onchange="saveOption(${index}, 'optionB')">
                                         <p class="fw-bold me-1 mb-0 d-inline">B.</p><div class="optionB d-inline">${question.optionB}</div><br>
-                                        <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" onchange="changeColor(${index})">
+                                        <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" onchange="saveOption(${index}, 'optionC')">
                                         <p class="fw-bold me-1 mb-0 d-inline">C.</p><div class="optionC d-inline">${question.optionC}</div><br>
-                                        <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" onchange="changeColor(${index})">
+                                        <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" onchange="saveOption(${index}, 'optionD')">
                                         <p class="fw-bold me-1 mb-0 d-inline">D.</p><div class="optionD d-inline">${question.optionD}</div><br>
                                     </div>
                                 </div>

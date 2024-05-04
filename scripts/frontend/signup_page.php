@@ -37,8 +37,8 @@
                 <div class="mb-2">
                     <label for="role">Role</label>
                     <select class="form-control" id="role" name="role" required>
-                        <option value="Student">Student</option>
-                        <option value="Teacher">Teacher</option>
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
                     </select>
                 </div>
                 <div class="mb-2">

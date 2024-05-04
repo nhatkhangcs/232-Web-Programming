@@ -10,7 +10,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="do_test_pagejs.js"></script>
+    <script src="do_test_pagejs.js"
+    <?php
+    session_start();
+    if (isset($_SESSION['studentid'])) {
+        echo 'studentid=' . $_SESSION['studentid'];
+    }
+    else {
+        echo 'studentid=-1';
+    }
+    ?>
+    ></script>
 </head>
 
 <body>

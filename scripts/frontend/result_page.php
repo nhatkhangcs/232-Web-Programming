@@ -97,7 +97,7 @@
                                 <p class="fw-bold result-color mb-1">Result</p>
                             </div>
                             <div class="col text-sm-end">
-                                <button class="btn btn-outline-primary" onclick="window.location.href='review_page.php?takentestid=1'"> 
+                                <button id="review_page_btn" class="btn btn-outline-primary" onclick="window.location.href='#'"> 
                                     <div class="button_content-2">
                                     <i class="material-icons fs-5 me-1">visibility</i> Review
                                     </div>

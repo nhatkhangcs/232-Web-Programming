@@ -24,14 +24,21 @@
                 <img src="../src/logo.png" width="150px">
             </div>
             <div class="card-body px-md-5">
-                <form action="login.php" method="post">
-                    <div class="mb-3">
+                <form action="../process/process_login.php" method="post">
+                    <div class="mb-2">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" id="username" name="username" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="role">Role</label>
+                        <select class="form-control" id="role" name="role" required>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                        </select>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <div class="form-check">

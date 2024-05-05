@@ -29,8 +29,13 @@ $(document).ready(function() {
                     // Create HTML for questions
                     let questionsHtml = '';
                     $.each(questionsData.questions, function(index, question) {
+                        let imageHtml = '';
+                        if (question.image !== "") {
+                            imageHtml = `<br><image class="mb-1" src="../image/test/${question.image}" alt="Question Image" class="img-fluid" style="max-width: 450px;">`;
+                        }
                         questionsHtml += `
                             <p class="fw-bold me-1 mb-0 d-inline">Question ${index + 1}:</p><div class="question d-inline">${question.question}</div>
+                            ${imageHtml}
                             <div class="container options">
                                 <p class="fw-bold me-1 mb-0 d-inline">A.</p><div class="optionA d-inline">${question.optionA}</div><br>
                                 <p class="fw-bold me-1 mb-0 d-inline">B.</p><div class="optionB d-inline">${question.optionB}</div><br>

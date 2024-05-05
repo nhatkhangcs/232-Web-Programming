@@ -17,10 +17,15 @@ $(document).ready(function() {
 
             let questionsHtml = '';
             $.each(data.taken_questions, function(index, question) {
+                let imageHtml = '';
+                if (question.image !== "") {
+                    imageHtml = `<br><image class="mb-1" src="../image/test/${question.image}" alt="Question Image" class="img-fluid" style="max-width: 450px;">`;
+                }
                 const chosenOption = question.chosenOption;
                 const answer = question.answer;
                 questionsHtml += `
                     <p class="fw-bold me-1 mb-0 d-inline">Question ${index + 1}:</p><div class="question d-inline">${question.question}</div>
+                    ${imageHtml}
                     <div class="container options">
                         <div class="review-question">
                             <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" disabled ${chosenOption === 'optionA' ? 'checked' : ''}>

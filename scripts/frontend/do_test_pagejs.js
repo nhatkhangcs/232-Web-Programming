@@ -171,10 +171,15 @@ $(document).ready(function() {
                     // Create HTML for questions
                     let questionsHtml = '';
                     $.each(questionsData.questions, function(index, question) {
+                        let imageHtml = '';
+                        if (question.image !== "") {
+                            imageHtml = `<br><image class="mb-1" src="../image/test/${question.image}" alt="Question Image" class="img-fluid" style="max-width: 450px;">`;
+                        }
                         questionsHtml += `
                             <div class="card mb-2">
                                 <div class="card-body">
                                     <p class="fw-bold me-1 mb-0 d-inline">Question ${index + 1}:</p><div class="question d-inline">${question.question}</div>
+                                    ${imageHtml}
                                     <div class="container ms-0 options">
                                         <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" onchange="saveOption(${index}, 'optionA')">
                                         <p class="fw-bold me-1 mb-0 d-inline">A.</p><div class="optionA d-inline">${question.optionA}</div><br>

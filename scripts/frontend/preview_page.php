@@ -10,7 +10,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <script src="preview_pagejs.js"></script>
+    <?php
+    session_start();
+    ?>
 </head>
 
 <body>
@@ -97,6 +101,20 @@
                                 Preview
                             </div>
                             <div class="col text-sm-end">
+                                <?php
+                                    if (isset($_SESSION['teacherid'])) {
+                                        echo '<button class="btn btn-primary mt-1" onclick="exportToPDF()"> 
+                                        <div class="button_content">
+                                        <i class="material-icons btn-item-icon fs-5 me-1">ios_share</i> Export
+                                        </div>
+                                    </button>';
+                                }
+                                ?>
+                                <!-- <button class="btn btn-primary mt-1" onclick="exportToPDF()"> 
+                                    <div class="button_content">
+                                    <i class="material-icons btn-item-icon fs-5 me-1">play_circle</i> Do test
+                                    </div>
+                                </button> -->
                                 <button class="btn btn-primary mt-1" onclick="window.location.href='do_test_page.php?testid=1'"> 
                                     <div class="button_content">
                                     <i class="material-icons btn-item-icon fs-5 me-1">play_circle</i> Do test
@@ -105,7 +123,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" id="export-content">
                         <div class="container text-center">
                             <p class="fw-bold fs-3 mb-2" id="courseName">Sample course name</p>
                             <p class="fw-bold me-1 d-inline fs-5">Test:</p><p class="d-inline fs-5" id="testName">Test</p>

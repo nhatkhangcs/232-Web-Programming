@@ -53,15 +53,20 @@ else {
 </div>
 
 <!-- account -->
-<div class="dashboard-item">
+<!-- <div class="dashboard-item">
     <i class="material-icons dashboard-item-icon-2 fs-2">person</i>
     Account
-</div>
+</div> -->
 
 <!-- log out -->
 <?php
 if (isset($_SESSION['role'])) {
-    echo '<div class="dashboard-item" onclick="window.location.href=\'../../process/logout.php\'">
+    echo '
+        <div class="dashboard-item" onclick="window.location.href=\'profile.php\'">
+            <i class="material-icons dashboard-item-icon-2 fs-2">person</i>
+            Account
+        </div>
+        <div class="dashboard-item" onclick="window.location.href=\'../../process/logout.php\'">
             <i class="material-icons dashboard-item-icon-2 fs-2">logout</i>
             Log out
         </div>';

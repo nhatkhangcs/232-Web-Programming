@@ -26,7 +26,7 @@ $(document).ready(function() {
                 questionsHtml += `
                     <p class="fw-bold me-1 mb-0 d-inline">Question ${index + 1}:</p><div class="question d-inline">${question.question}</div>
                     ${imageHtml}
-                    <div class="container options">
+                    <div class="container options mb-2">
                         <div class="review-question">
                             <input class="form-check-input me-1" type="radio" name="Radio-question-${index + 1}" disabled ${chosenOption === 'optionA' ? 'checked' : ''}>
                             <p class="fw-bold me-1 mb-0 d-inline">A.</p><div class="optionA d-inline">${question.optionA}</div>
@@ -47,6 +47,7 @@ $(document).ready(function() {
                             <p class="fw-bold me-1 mb-0 d-inline">D.</p><div class="optionD d-inline">${question.optionD}</div>
                             ${chosenOption === 'optionD'  ? `<i class="material-icons ps-3 me-1 ${answer === 'optionD' ? 'text-success">done' : 'text-danger">close'}</i>` : ''}
                         </div>
+                        <p class="fw-bold me-1 mb-0 d-inline">Difficulty level :</p><div class="question d-inline">${question.difficultyLevel}</div>
                     </div>
                 `;
             });

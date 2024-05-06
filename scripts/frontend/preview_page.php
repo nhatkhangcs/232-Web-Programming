@@ -65,7 +65,7 @@
                             <div class="col text-sm-end">
                                 <?php
                                     if (isset($_SESSION['teacherid'])) {
-                                        echo '<button class="btn btn-primary mt-1" onclick="exportToPDF()"> 
+                                        echo '<button class="btn btn-primary mt-1" onclick="exportToDOCX()"> 
                                         <div class="button_content">
                                         <i class="material-icons btn-item-icon fs-5 me-1">ios_share</i> Export
                                         </div>

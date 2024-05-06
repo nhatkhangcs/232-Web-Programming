@@ -1,16 +1,82 @@
-function exportToPDF() {
+// function exportToPDF() {
+//     var element = document.getElementById('export-content');
+
+//     var opt = {
+//         margin: 0.5,
+//         filename: 'export.pdf',
+//         image: { type: 'jpeg', quality: 0.98 },
+//         html2canvas: { scale: 2 },
+//         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+//     };
+
+//     html2pdf().set(opt).from(element).save();
+// }
+
+function exportToDOCX() {
     var element = document.getElementById('export-content');
 
-    var opt = {
-        margin: 0.5,
-        filename: 'export.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
+    // Make AJAX request to get test data
+    var testId = new URLSearchParams(window.location.search).get('testid');
+    $.ajax({
+        type: 'GET',
+        url: '../backend/test/getTest.php?testid=' + testId + '&auth_key=your_valid_auth_key',
+        dataType: 'json',
+        success: function(data) {
+            // Store test data
+            var testData = {
+                testName: data.testname,
+                courseName: data.coursename,
+                testDescription: data.description,
+                testDuration: data.timelimit,
+                questions: []
+            };
 
-    html2pdf().set(opt).from(element).save();
+            // Make AJAX request to get questions data
+            $.ajax({
+                type: 'GET',
+                url: '../backend/question/getQuestion.php?testid=' + testId + '&answer=true&auth_key=your_valid_auth_key',
+                dataType: 'json',
+                success: function(questionsData) {
+                    // Process questions data
+                    $.each(questionsData.questions, function(index, question) {
+                        // Construct HTML for question options
+                        var optionsArray = [question.optionA, question.optionB, question.optionC, question.optionD];
+
+                        // Append question data to testData
+                        testData.questions.push({
+                            questionText: question.question,
+                            image: question.image,
+                            options: optionsArray
+                        });
+                    });
+
+                    // Now testData contains all required information
+                    // Make AJAX request to export data to DOCX
+                    $.ajax({
+                        type: 'POST',
+                        url: 'exportToDOCX.php',
+                        data: JSON.stringify(testData), // Send test data to PHP script
+                        contentType: 'application/json',
+                        success: function(response) {
+                            // Handle success response (if needed)
+                            console.log('Exported to DOCX:', response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error exporting to DOCX:', error);
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching questions data:', error);
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching test data:', error);
+        }
+    });
 }
+
 
 $(document).ready(function() {
     // Make AJAX request to get test data

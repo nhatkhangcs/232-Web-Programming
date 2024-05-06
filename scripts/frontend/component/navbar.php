@@ -3,16 +3,42 @@
 </div>
 
 <!-- dashboard -->
-<div class="dashboard-item" onclick="window.location.href='index.php?page=dashboard'">
+<?php
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] == 'teacher') {
+        echo '<div class="dashboard-item" onclick="window.location.href=\'../frontend/teacher_dashboard.php\'">
+            <i class="material-icons dashboard-item-icon fs-2">space_dashboard</i>
+            Dashboard
+        </div>
+        <div class="dashboard-item" onclick="window.location.href=\'my course.php\'">
+            <i class="material-icons dashboard-item-icon fs-2">school</i>
+            My course
+        </div>';
+    }
+    else if ($_SESSION['role'] == 'student') {
+        echo '<div class="dashboard-item" onclick="window.location.href=\'../frontend/student_dashboard.php\'">
+            <i class="material-icons dashboard-item-icon fs-2">space_dashboard</i>
+            Dashboard
+        </div>';
+    }
+}
+else {
+    echo '<div class="dashboard-item" onclick="window.location.href=\'../frontend/guest_dashboard.php\'">
+            <i class="material-icons dashboard-item-icon fs-2">space_dashboard</i>
+            Dashboard
+        </div>';
+}
+?>
+<!-- <div class="dashboard-item" onclick="window.location.href='index.php?page=dashboard'">
     <i class="material-icons dashboard-item-icon fs-2">space_dashboard</i>
     Dashboard
-</div>
+</div> -->
 
 <!-- course -->
-<div class="dashboard-item" onclick="window.location.href='index.php?page=my-course'">
+<!-- <div class="dashboard-item" onclick="window.location.href='my course.php'">
     <i class="material-icons dashboard-item-icon fs-2">school</i>
     My course
-</div>
+</div> -->
 
 <!-- explore -->
 <div class="dashboard-item" onclick="window.location.href='explore course.php'">

@@ -13,7 +13,7 @@ $(document).ready(function() {
             console.log(data);
             $('#testNameNav').text(data.test_name);
             $('#courseNameNav').text(data.course_name);
-
+            $('#courseNameNav').attr('href', 'explore test.php?courseId=' + data.courseid);
             $('#testName').text(data.test_name);
             $('#courseName').text(data.course_name);
 

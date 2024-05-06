@@ -12,49 +12,16 @@
 </head>
 
 <body>
+    <?php
+    session_start();
+    ?>
     <div class="page-container">
         <!-- sidebar -->
         <div class="sidebar shadow">
             <!-- dashboard logo -->
-            <div class="logo-sidebar" onclick="window.location.href='index.php?page=home-page'">
-                <img src="../src/logo.png" width="120px">
-            </div>
-
-            <!-- dashboard -->
-            <div class="dashboard-item" onclick="window.location.href='index.php?page=dashboard'">
-                <i class="material-icons dashboard-item-icon fs-2">space_dashboard</i>
-                Dashboard
-            </div>
-
-            <!-- course -->
-            <div class="dashboard-item" onclick="window.location.href='index.php?page=my-course'">
-                <i class="material-icons dashboard-item-icon fs-2">school</i>
-                My course
-            </div>
-
-            <!-- explore -->
-            <div class="dashboard-item" onclick="window.location.href='explore course.php'">
-                <i class="material-icons dashboard-item-icon fs-2">travel_explore</i>
-                Explore
-            </div>
-
-            <!-- history -->
-            <div class="dashboard-item">
-                <i class="material-icons dashboard-item-icon-2 fs-2">history</i>
-                History
-            </div>
-
-            <!-- account -->
-            <div class="dashboard-item">
-                <i class="material-icons dashboard-item-icon-2 fs-2">person</i>
-                Account
-            </div>
-
-            <!-- log out -->
-            <div class="dashboard-item">
-                <i class="material-icons dashboard-item-icon-2 fs-2">logout</i>
-                Log out
-            </div>
+            <?php
+                include './component/navbar.php';
+            ?>
 
         </div>
 
@@ -70,11 +37,9 @@
                 </div>
 
                 <div class="user-avatar">
-                    <img src="../src/avatar.png" class="avatar-image shadow">
-                    <div class="user-avatar-text">
-                        <div class="user-avatar-name">Nathaniel</div>
-                        <div class="user-avatar-role">Teacher</div>
-                    </div>
+                    <?php
+                        include './component/user.php';
+                    ?>
                 </div>
             </div>
 
@@ -138,6 +103,10 @@
                             $result2 = mysqli_query($conn, $query2);
                             $row2 = mysqli_fetch_assoc($result2);
 
+                            $sql_get_test = "SELECT COUNT(*) AS test_count FROM test WHERE courseId = " . $row['courseId'];
+                            $result_test = mysqli_query($conn, $sql_get_test);
+                            $row_test = mysqli_fetch_assoc($result_test);
+
                             echo '<div class="course-item shadow" onclick="location.href=\'explore test.php?courseId=' . $row['courseId'] . '\';">';
                             echo '<div class="course-item-title-explore">';
                             echo htmlspecialchars($row['name']);
@@ -146,7 +115,7 @@
                                     Create by <content class="course-item-author">' . htmlspecialchars($row2['name']) . '</content>
                                 </div>';
                             echo '<div class="course-item-total">
-                                    Total Test: <content>' . count(json_decode($row['Test'])) . '</content>';
+                                    Total Test: <content>' . $row_test['test_count'] . '</content>';
                             echo '</div>';
                             echo '<div class="course-item-description">' . htmlspecialchars($row['description']) . '</div>';
                             echo '<div class="course-item-update-time">

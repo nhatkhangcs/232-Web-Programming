@@ -12,49 +12,16 @@
 </head>
 
 <body>
+    <?php
+    session_start();
+    ?>
     <div class="page-container">
         <!-- sidebar -->
         <div class="sidebar shadow">
             <!-- dashboard logo -->
-            <div class="logo-sidebar" onclick="window.location.href='index.php?page=home-page'">
-                <img src="../src/logo.png" width="120px">
-            </div>
-
-            <!-- dashboard -->
-            <div class="dashboard-item" onclick="window.location.href='index.php?page=dashboard'">
-                <i class="material-icons dashboard-item-icon fs-2">space_dashboard</i>
-                Dashboard
-            </div>
-
-            <!-- course -->
-            <div class="dashboard-item" onclick="window.location.href='index.php?page=my-course'">
-                <i class="material-icons dashboard-item-icon fs-2">school</i>
-                My course
-            </div>
-
-            <!-- explore -->
-            <div class="dashboard-item" onclick="window.location.href='explore course.php'">
-                <i class="material-icons dashboard-item-icon fs-2">travel_explore</i>
-                Explore
-            </div>
-
-            <!-- history -->
-            <div class="dashboard-item">
-                <i class="material-icons dashboard-item-icon-2 fs-2">history</i>
-                History
-            </div>
-
-            <!-- account -->
-            <div class="dashboard-item">
-                <i class="material-icons dashboard-item-icon-2 fs-2">person</i>
-                Account
-            </div>
-
-            <!-- log out -->
-            <div class="dashboard-item">
-                <i class="material-icons dashboard-item-icon-2 fs-2">logout</i>
-                Log out
-            </div>
+            <?php
+                include './component/navbar.php';
+            ?>
 
         </div>
 
@@ -70,11 +37,9 @@
                 </div>
 
                 <div class="user-avatar">
-                    <img src="../src/avatar.png" class="avatar-image shadow">
-                    <div class="user-avatar-text">
-                        <div class="user-avatar-name">Nathaniel</div>
-                        <div class="user-avatar-role">Teacher</div>
-                    </div>
+                    <?php
+                        include './component/user.php';
+                    ?>
                 </div>
             </div>
 
@@ -150,15 +115,29 @@
                             if (!$conn) {
                                 die("Connection failed: " . mysqli_connect_error());
                             }
-                            $query = "SELECT * FROM teacher WHERE TeacherId = 1";
-                            $result = mysqli_query($conn, $query);
-
-                            if (mysqli_num_rows($result) > 0) {
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    echo '' . htmlspecialchars($row['name']) . '';
-                                }
+                            if (isset($_GET['courseId'])) {
+                                $courseId = $_GET['courseId'];
                             } else {
-                                echo 'ERROR';
+                                $courseId = 1;
+                            }
+                            $sql_get_teacherid = "SELECT teacherId FROM course WHERE CourseId = $courseId";
+                            $result_get_teacherid = mysqli_query($conn, $sql_get_teacherid);
+                            if (!$result_get_teacherid) {
+                                echo 'ERROR';  
+                            }
+                            else {
+                                $row_get_teacherid = mysqli_fetch_assoc($result_get_teacherid);
+                                $teacherId = $row_get_teacherid['teacherId'];
+                                $query = "SELECT * FROM teacher WHERE TeacherId = $teacherId";
+                                $result = mysqli_query($conn, $query);
+
+                                if (mysqli_num_rows($result) > 0) {
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        echo '' . htmlspecialchars($row['name']) . '';
+                                    }
+                                } else {
+                                    echo 'ERROR';
+                                }
                             }
                             mysqli_close($conn);
                             ?>
@@ -263,10 +242,10 @@
                                     <td>' . htmlspecialchars($row['timeLimit']) . ' minutes</td>
                                     <td>
                                     <div class="text-end">
-                                        <a href="preview_page.php?testId=' . $row['testId'] . '" style="text-decoration: none">
+                                        <a href="preview_page.php?testid=' . $row['testId'] . '" style="text-decoration: none">
                                             <i class="material-icons fs-3 pe-3" style="color: #4D5FFF;">visibility</i>
                                         </a>
-                                        <a href="do_test_page.php?testId=' . $row['testId'] . '" style="text-decoration: none">
+                                        <a href="do_test_page.php?testid=' . $row['testId'] . '" style="text-decoration: none">
                                             <i class="material-icons fs-3 me-3" style="color: #4D5FFF;">play_circle</i>
                                         </a>
                                     </div>

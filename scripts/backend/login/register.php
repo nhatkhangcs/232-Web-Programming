@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Insert the user into the appropriate table based on role
-        $sql_insert_user = "INSERT INTO $table_name (username, password, email) VALUES ('$username', '$hashed_password', '$email')";
+        $sql_insert_user = "INSERT INTO $table_name (username, password, name, email) VALUES ('$username', '$hashed_password', '$username', '$email')";
         if (mysqli_query($conn, $sql_insert_user)) {
             // Registration successful
             echo json_encode(array("message" => "User registered successfully"));

@@ -38,11 +38,9 @@
             </div>
             <!-- User avatar -->
             <div class="user-avatar">
-                <img src="../src/avatar.png" class="avatar-image shadow">
-                <div class="user-avatar-text">
-                    <div class="user-avatar-name">Nathaniel</div>
-                    <div class="user-avatar-role">Teacher</div>
-                </div>
+                <?php
+                    include './component/user.php';
+                ?>
             </div>
         </div>
     </div>

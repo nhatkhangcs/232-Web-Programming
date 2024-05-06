@@ -40,11 +40,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     session_start();
                     $_SESSION['role'] = 'teacher';
                     $_SESSION['teacherid'] = $user['teacherId'];
+                    $_SESSION['teachername'] = $user['name'];
                     header("Location: ../frontend/teacher_dashboard.php");
                 } elseif ($role === 'student') {
                     session_start();
                     $_SESSION['role'] = 'student';
                     $_SESSION['studentid'] = $user['studentId'];
+                    $_SESSION['studentname'] = $user['name'];
                     // header("Location: ../frontend/do_test_page.php");
                     header("Location: ../frontend/student_dashboard.php");
                 } elseif ($role === 'admin') {

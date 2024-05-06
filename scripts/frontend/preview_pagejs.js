@@ -60,6 +60,12 @@ function exportToDOCX() {
                         success: function(response) {
                             // Handle success response (if needed)
                             console.log('Exported to DOCX:', response);
+                            var a = document.createElement('a');
+                            a.href = 'exported_test.docx';
+                            document.body.appendChild(a);
+                            a.click();
+                            // Cleanup
+                            document.body.removeChild(a);
                         },
                         error: function(xhr, status, error) {
                             console.error('Error exporting to DOCX:', error);

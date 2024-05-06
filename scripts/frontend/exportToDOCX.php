@@ -28,10 +28,31 @@ foreach ($data->questions as $index => $question) {
     // Print the image if available
     if (!empty($question->image)) {
         // Scale the image to a smaller size (e.g., 200x200 pixels)
+        $desiredWidth = 450;
+        $desiredHeight = 200;
+        
+        // Get the dimensions of the original image
+        list($originalWidth, $originalHeight) = getimagesize('../image/test/' . $question->image);
+        
+        // Calculate the aspect ratio
+        $aspectRatio = $originalWidth / $originalHeight;
+        
+        // Calculate the scaled dimensions
+        if ($aspectRatio >= 1) {
+            // Landscape or square image
+            $newWidth = $desiredWidth;
+            $newHeight = $desiredWidth / $aspectRatio;
+        } else {
+            // Portrait image
+            $newHeight = $desiredHeight;
+            $newWidth = $desiredHeight * $aspectRatio;
+        }
+    
+        // Add the scaled image
         $docx->addImage(array(
             'src' => '../image/test/' . $question->image,
-            'width' => 200, // Adjust width as needed
-            'height' => 200 // Adjust height as needed
+            'width' => $newWidth,
+            'height' => $newHeight
         ));
     }
     // Print option A

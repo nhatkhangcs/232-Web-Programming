@@ -17,7 +17,7 @@
         <div class="sidebar shadow">
             <!-- dashboard logo -->
             <div class="logo-sidebar" onclick="window.location.href='index.php?page=home-page'">
-                <img src="./src/logo testsmart.png" width="120px">
+                <img src="../src/logo.png" width="120px">
             </div>
 
             <!-- dashboard -->
@@ -33,7 +33,7 @@
             </div>
 
             <!-- explore -->
-            <div class="dashboard-item" onclick="window.location.href='index.php?page=explore-course'">
+            <div class="dashboard-item" onclick="window.location.href='explore course.php'">
                 <i class="material-icons dashboard-item-icon fs-2">travel_explore</i>
                 Explore
             </div>
@@ -115,21 +115,30 @@
                 <div class="course-block ">
                     <!-- course-item -->
                     <?php
-                    include 'database.php';
+                    include '../db-create/db-config.php';
+
+                    $conn = mysqli_connect($host, $username, $password, $dbname);
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
 
 
                     $query = "SELECT * FROM course";
                     $result = mysqli_query($conn, $query);
-                    $row = mysqli_fetch_assoc($result);
-                    $query2 = "SELECT * FROM teacher";
-                    $result2 = mysqli_query($conn, $query2);
-                    $row2 = mysqli_fetch_assoc($result2);
+
+                    // $query2 = "SELECT * FROM teacher";
+                    // $result2 = mysqli_query($conn, $query2);
+                    // $row2 = mysqli_fetch_assoc($result2);
+                    // var_dump($row2);
 
 
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
+                            $query2 = "SELECT * FROM teacher WHERE teacherId = " . $row['teacherId'];
+                            $result2 = mysqli_query($conn, $query2);
+                            $row2 = mysqli_fetch_assoc($result2);
 
-                            echo '<div class="course-item shadow" onclick="location.href=\'index.php?page=explore-test\';">';
+                            echo '<div class="course-item shadow" onclick="location.href=\'explore test.php?courseId=' . $row['courseId'] . '\';">';
                             echo '<div class="course-item-title-explore">';
                             echo htmlspecialchars($row['name']);
                             echo '</div>';
@@ -137,7 +146,7 @@
                                     Create by <content class="course-item-author">' . htmlspecialchars($row2['name']) . '</content>
                                 </div>';
                             echo '<div class="course-item-total">
-                                    Total Course: <content>' . htmlspecialchars($row['Test']) . '</content>';
+                                    Total Test: <content>' . count(json_decode($row['Test'])) . '</content>';
                             echo '</div>';
                             echo '<div class="course-item-description">' . htmlspecialchars($row['description']) . '</div>';
                             echo '<div class="course-item-update-time">

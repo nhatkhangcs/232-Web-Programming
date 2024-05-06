@@ -68,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 $response = array(
                     "testname" => $row['testname'],
                     "coursename" => $coursename,
+                    "courseid" => $row['courseId'],
                     "description" => $row['description'],
                     "timeCreated" => $row['timeCreated'],
                     "timelimit" => $row['timeLimit'],

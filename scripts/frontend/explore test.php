@@ -17,7 +17,7 @@
         <div class="sidebar shadow">
             <!-- dashboard logo -->
             <div class="logo-sidebar" onclick="window.location.href='index.php?page=home-page'">
-                <img src="./src/logo testsmart.png" width="120px">
+                <img src="../src/logo.png" width="120px">
             </div>
 
             <!-- dashboard -->
@@ -33,7 +33,7 @@
             </div>
 
             <!-- explore -->
-            <div class="dashboard-item" onclick="window.location.href='index.php?page=explore-course'">
+            <div class="dashboard-item" onclick="window.location.href='explore course.php'">
                 <i class="material-icons dashboard-item-icon fs-2">travel_explore</i>
                 Explore
             </div>
@@ -83,11 +83,21 @@
                 <!-- Tool bar -->
                 <div class="tool-bar">
                     <!-- course name -->
-                    <div class="tool-bar-course-name" onclick="window.location.href='index.php?page=explore-course'">
+                    <div class="tool-bar-course-name" onclick="window.location.href='explore course.php'">
                         <i class="material-icons">arrow_back_ios</i></button>
                         <?php
-                        include ('database.php');
-                        $query = "SELECT * FROM course WHERE CourseId = 1";
+                        include '../db-create/db-config.php';
+
+                        $conn = mysqli_connect($host, $username, $password, $dbname);
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+                        if (isset($_GET['courseId'])) {
+                            $courseId = $_GET['courseId'];
+                        } else {
+                            $courseId = 1;
+                        }
+                        $query = "SELECT * FROM course WHERE CourseId = $courseId";
                         $result = mysqli_query($conn, $query);
 
                         if (mysqli_num_rows($result) > 0) {
@@ -134,7 +144,12 @@
                         <img src="../src/avatar.png" class="creator-image shadow ms-2">
                         <content class="course-item-author">
                             <?php
-                            include ('database.php');
+                            include '../db-create/db-config.php';
+
+                            $conn = mysqli_connect($host, $username, $password, $dbname);
+                            if (!$conn) {
+                                die("Connection failed: " . mysqli_connect_error());
+                            }
                             $query = "SELECT * FROM teacher WHERE TeacherId = 1";
                             $result = mysqli_query($conn, $query);
 
@@ -155,8 +170,18 @@
                 <div class="course-description">
                     <content>Description:</content> <br>
                     <?php
-                    include ('database.php');
-                    $query = "SELECT * FROM course WHERE CourseId = 1";
+                    include '../db-create/db-config.php';
+
+                    $conn = mysqli_connect($host, $username, $password, $dbname);
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+                    if (isset($_GET['courseId'])) {
+                        $courseId = $_GET['courseId'];
+                    } else {
+                        $courseId = 1;
+                    }
+                    $query = "SELECT * FROM course WHERE CourseId = $courseId";
                     $result = mysqli_query($conn, $query);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -204,26 +229,46 @@
 
 
                             <?php
-                            include 'database.php';
+                            include '../db-create/db-config.php';
 
-                            $query = "SELECT * FROM test WHERE courseId = 1";
+                            $conn = mysqli_connect($host, $username, $password, $dbname);
+                            if (!$conn) {
+                                die("Connection failed: " . mysqli_connect_error());
+                            }
+
+                            if (isset($_GET['courseId'])) {
+                                $courseId = $_GET['courseId'];
+                            } else {
+                                $courseId = 1;
+                            }
+                            $query = "SELECT * FROM test WHERE courseId = $courseId";
                             $result = mysqli_query($conn, $query);
 
                             if (mysqli_num_rows($result) > 0) {
                                 while ($row = mysqli_fetch_assoc($result)) {
+                                    $sql_questions = "SELECT COUNT(*) AS question_count FROM question WHERE testId = " . $row['testId'];
+                                    $result_questions = mysqli_query($conn, $sql_questions);
+                                    $row_questions = mysqli_fetch_assoc($result_questions);
+
+
                                     echo '<tr class="list-item">
                                     <td>
                                         <div class="d-flex .align-item-center">
                                             <i class="material-icons me-2" style="color: #4D5FFF;">description</i>'
-                                        . htmlspecialchars($row['description']) .
+                                        . htmlspecialchars($row['name']) .
                                         '</div>
                                     </td>
                                     <td>' . htmlspecialchars($row['timeCreated']) . '</td>
-                                    <td>' . htmlspecialchars($row['question']) . '</td>
-                                    <td>' . htmlspecialchars($row['timeLimit']) . '</td>
+                                    <td>' . htmlspecialchars($row_questions['question_count']) . '</td>
+                                    <td>' . htmlspecialchars($row['timeLimit']) . ' minutes</td>
                                     <td>
                                     <div class="text-end">
-                                        <i class="material-icons fs-3 me-3" style="color: #4D5FFF;">play_circle</i>
+                                        <a href="preview_page.php?testId=' . $row['testId'] . '" style="text-decoration: none">
+                                            <i class="material-icons fs-3 pe-3" style="color: #4D5FFF;">visibility</i>
+                                        </a>
+                                        <a href="do_test_page.php?testId=' . $row['testId'] . '" style="text-decoration: none">
+                                            <i class="material-icons fs-3 me-3" style="color: #4D5FFF;">play_circle</i>
+                                        </a>
                                     </div>
                                     </td>';
                                     echo '</tr>';

@@ -13,10 +13,15 @@
 
 <body>
     <?php
-    include 'database.php';
-    include 'backend/test/createTest.php';
-    include 'backend/test/deleteTest.php';
-    include 'backend/test/updateTest.php';
+    include '../db-create/db-config.php';
+
+    $conn = mysqli_connect($host, $username, $password, $dbname);
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    // include 'backend/test/createTest.php';
+    // include 'backend/test/deleteTest.php';
+    // include 'backend/test/updateTest.php';
     ?>
 
 
@@ -25,7 +30,7 @@
         <div class="sidebar shadow">
             <!-- dashboard logo -->
             <div class="logo-sidebar" onclick="window.location.href='index.php?page=home-page'">
-                <img src="./src/logo testsmart.png" width="120px">
+                <img src="../src/logo.png" width="120px">
             </div>
 
             <!-- dashboard -->
@@ -94,7 +99,12 @@
                     <div class="tool-bar-course-name" onclick="window.location.href='index.php?page=my-course'">
                         <i class="material-icons">arrow_back_ios</i></button>
                         <?php
-                        include ('database.php');
+                        include '../db-create/db-config.php';
+
+                        $conn = mysqli_connect($host, $username, $password, $dbname);
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
                         $query = "SELECT * FROM course WHERE CourseId = 1";
                         $result = mysqli_query($conn, $query);
 
@@ -154,7 +164,12 @@
                 <div class="course-description">
                     <content>Description:</content> <br>
                     <?php
-                    include ('database.php');
+                    include '../db-create/db-config.php';
+
+                    $conn = mysqli_connect($host, $username, $password, $dbname);
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
                     $query = "SELECT * FROM course WHERE CourseId = 1";
                     $result = mysqli_query($conn, $query);
 
@@ -184,7 +199,12 @@
                         </thead>
                         <tbody>
                             <?php
-                            include 'database.php';
+                            include '../db-create/db-config.php';
+
+                            $conn = mysqli_connect($host, $username, $password, $dbname);
+                            if (!$conn) {
+                                die("Connection failed: " . mysqli_connect_error());
+                            }
 
                             $query = "SELECT * FROM test WHERE courseId = 1";
                             $result = mysqli_query($conn, $query);

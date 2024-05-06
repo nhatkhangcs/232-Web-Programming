@@ -15,7 +15,6 @@ function exportToPDF() {
 $(document).ready(function() {
     // Make AJAX request to get test data
     var testId = new URLSearchParams(window.location.search).get('testId');
-    testId = 1;
     $.ajax({
         type: 'GET',
         url: '../backend/test/getTest.php?testid=' + testId + '&auth_key=your_valid_auth_key',
@@ -27,6 +26,7 @@ $(document).ready(function() {
             $('#testName').text(data.testname);
             $('#courseName').text(data.coursename);
             $('#courseNameNav').text(data.coursename);
+            $('#courseNameNav').attr('href', 'explore test.php?courseId=' + data.courseid);
             $('#testDescription').text(data.description);
             $('#testDuration').text(data.timelimit + ' minutes');
 

@@ -14,10 +14,15 @@
 <body>
     <!-- database & backend -->
     <?php
-    include 'database.php';
-    include 'backend/teacher/createCourse.php';
-    include 'backend/teacher/deleteCourse.php';
-    include 'backend/teacher/updateCourse.php';
+    include '../db-create/db-config.php';
+
+    $conn = mysqli_connect($host, $username, $password, $dbname);
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+    // include '../backend/teacher/createCourse.php';
+    // include '../backend/teacher/deleteCourse.php';
+    // include '../backend/teacher/updateCourse.php';
     ?>
 
 
@@ -26,7 +31,7 @@
         <div class="sidebar shadow">
             <!-- dashboard logo -->
             <div class="logo-sidebar" onclick="window.location.href='index.php?page=home-page'">
-                <img src="./src/logo testsmart.png" width="120px">
+                <img src="../src/logo.png" width="120px">
             </div>
 
             <!-- dashboard -->
@@ -129,7 +134,12 @@
                 <div class="course-block">
                     <!-- Course block list -->
                     <?php
-                    include 'database.php';
+                    include '../db-create/db-config.php';
+
+                    $conn = mysqli_connect($host, $username, $password, $dbname);
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
 
                     $query = "SELECT * FROM course WHERE teacherId = 1";
                     $result = mysqli_query($conn, $query);

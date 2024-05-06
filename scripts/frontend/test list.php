@@ -5,35 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Smart</title>
-    <link rel="icon" href="../src/logo.png" type="image/png">
-    <link rel="stylesheet" type="text/css" href="../styles/style.css">
+    <link rel="icon" href="./src/logo testsmart.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
+    <?php
+    include 'database.php';
+    include 'backend/test/createTest.php';
+    include 'backend/test/deleteTest.php';
+    include 'backend/test/updateTest.php';
+    ?>
+
+
     <div class="page-container">
         <!-- sidebar -->
         <div class="sidebar shadow">
             <!-- dashboard logo -->
-            <div class="logo-sidebar">
-                <img src="../src/logo.png" width="120px">
+            <div class="logo-sidebar" onclick="window.location.href='index.php?page=home-page'">
+                <img src="./src/logo testsmart.png" width="120px">
             </div>
 
             <!-- dashboard -->
-            <div class="dashboard-item" onclick="window.location.href='dashboard.html'">
+            <div class="dashboard-item" onclick="window.location.href='index.php?page=dashboard'">
                 <i class="material-icons dashboard-item-icon fs-2">space_dashboard</i>
                 Dashboard
             </div>
 
             <!-- course -->
-            <div class="dashboard-item" onclick="window.location.href='my course.html'">
+            <div class="dashboard-item" onclick="window.location.href='index.php?page=my-course'">
                 <i class="material-icons dashboard-item-icon fs-2">school</i>
                 My course
             </div>
 
             <!-- explore -->
-            <div class="dashboard-item">
+            <div class="dashboard-item" onclick="window.location.href='index.php?page=explore-course'">
                 <i class="material-icons dashboard-item-icon fs-2">travel_explore</i>
                 Explore
             </div>
@@ -83,16 +91,29 @@
                 <!-- Tool bar -->
                 <div class="tool-bar">
                     <!-- course name -->
-                    <div class="tool-bar-course-name">
+                    <div class="tool-bar-course-name" onclick="window.location.href='index.php?page=my-course'">
                         <i class="material-icons">arrow_back_ios</i></button>
-                        <content>Math midterm exam</content>
+                        <?php
+                        include ('database.php');
+                        $query = "SELECT * FROM course WHERE CourseId = 1";
+                        $result = mysqli_query($conn, $query);
+
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo '<content>' . htmlspecialchars($row['name']) . '</content>';
+                            }
+                        } else {
+                            echo 'ERROR';
+                        }
+                        mysqli_close($conn);
+                        ?>
                     </div>
 
                     <!-- Share type -->
-                    <div class="tool-bar-share-type">
+                    <!-- <div class="tool-bar-share-type">
                         <i class="material-icons me-2">group</i></button>
                         Public
-                    </div>
+                    </div> -->
 
                     <!-- search-bar -->
                     <div class="search-bar">
@@ -132,9 +153,20 @@
                 <!-- course description -->
                 <div class="course-description">
                     <content>Description:</content> <br>
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit
-                    anim id est laborum.
+                    <?php
+                    include ('database.php');
+                    $query = "SELECT * FROM course WHERE CourseId = 1";
+                    $result = mysqli_query($conn, $query);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '' . htmlspecialchars($row['description']) . '';
+                        }
+                    } else {
+                        echo 'ERROR';
+                    }
+                    mysqli_close($conn);
+                    ?>
 
                 </div>
 
@@ -151,23 +183,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- List item -->
-                            <tr class="list-item">
-                                <td>
-                                    <div class="d-flex .align-item-center">
-                                        <i class="material-icons me-2" style="color: #4D5FFF;">description</i>
-                                        Midterm exam 2021
-                                    </div>
-                                </td>
-                                <td>15 Apr 2024</td>
-                                <td>40</td>
-                                <td>45 minutes</td>
-                                <td>
-                                    <div class="text-end">
-                                        <i class="material-icons ms-2" style="color: #737373;">more_vert</i>
-                                    </div>
-                                </td>
-                            </tr>
+                            <?php
+                            include 'database.php';
+
+                            $query = "SELECT * FROM test WHERE courseId = 1";
+                            $result = mysqli_query($conn, $query);
+
+                            if (mysqli_num_rows($result) > 0) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<tr class="list-item">
+                                    <td>
+                                        <div class="d-flex .align-item-center">
+                                            <i class="material-icons me-2" style="color: #4D5FFF;">description</i>'
+                                        . htmlspecialchars($row['description']) .
+                                        '</div>
+                                    </td>
+                                    <td>' . htmlspecialchars($row['timeCreated']) . '</td>
+                                    <td>' . htmlspecialchars($row['question']) . '</td>
+                                    <td>' . htmlspecialchars($row['timeLimit']) . '</td>
+                                    <td>
+                                        <div class="text-start">';
+                                    echo '<div class="course-item-option justify-content-center">';
+                                    echo '<i class="material-icons fs-5 ">more_vert</i>';
+                                    echo '<div class="course-item-dropdown">
+                                                <form method = "POST"> 
+                                                <input type="hidden" name="course_id" value="ID_OF_THE_COURSE">
+                                                <button type="submit" name="delete_btn" class = "course-item-dropdown-option"><i class="material-icons fs-5 me-2">edit</i>edit</button>
+                                                </form>
+            
+                                                <form method = "POST"> 
+                                                <input type="hidden" name="delete_course" value="ID_OF_THE_COURSE">
+                                                <button type="submit" class = "course-item-dropdown-option"><i class="material-icons fs-5 me-2">delete</i>Delete</button>
+                                                </form>
+                                            </div>';
+                                    echo '</div>';
+                                    echo '</div> </td>';
+                                    echo '</tr>';
+                                }
+                            } else {
+                                echo 'No test found.';
+                            }
+
+                            mysqli_close($conn);
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -215,6 +273,103 @@
         </div>
 
     </div>
+
+    <script>
+        //HANDLE DROPDOWN SECTION
+        document.addEventListener('DOMContentLoaded', function () {
+            // Handle filter dropdowns
+            const filterSections = document.querySelectorAll('.filter-section');
+            filterSections.forEach(function (filterSection) {
+                const dropdown = filterSection.querySelector('.filter-dropdown');
+                const filterValue = filterSection.querySelector('.filter-value');
+                setupDropdown(filterSection, dropdown, filterValue);
+
+                // Set default filter value to 'All' or 'All time' based on the filter
+                if (!filterValue.textContent.trim()) {
+                    const defaultOption = dropdown.querySelector('.dropdown-option[data-value="All"]');
+                    filterValue.textContent = defaultOption ? defaultOption.textContent : 'All';
+                }
+            });
+
+            // Handle course item option dropdowns
+            const courseOptions = document.querySelectorAll('.course-item-option');
+            courseOptions.forEach(function (option) {
+                const dropdown = option.querySelector('.course-item-dropdown');
+                setupDropdown(option, dropdown);
+            });
+
+            // Setup dropdown functionality
+            function setupDropdown(triggerElement, dropdown, filterValue = null) {
+                triggerElement.addEventListener('click', function (event) {
+                    event.stopPropagation(); // Stop propagation to allow for outside clicks to close dropdown
+                    // Toggle current dropdown
+                    dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+
+                    // Close other dropdowns
+                    const allDropdowns = document.querySelectorAll('.filter-dropdown, .course-item-dropdown');
+                    allDropdowns.forEach(function (otherDropdown) {
+                        if (otherDropdown !== dropdown) {
+                            otherDropdown.style.display = 'none';
+                        }
+                    });
+                });
+
+                // For filter dropdowns, update the displayed value
+                if (filterValue) {
+                    dropdown.querySelectorAll('.dropdown-option').forEach(function (item) {
+                        item.addEventListener('click', function (event) {
+                            event.stopPropagation(); // Prevent the click from propagating to the document
+                            filterValue.textContent = this.textContent;
+                            dropdown.style.display = 'none'; // Close dropdown after selection
+                        });
+                    });
+                }
+            }
+
+            // Clicking outside any dropdown should close all dropdowns
+            document.addEventListener('click', function () {
+                const allDropdowns = document.querySelectorAll('.filter-dropdown, .course-item-dropdown');
+                allDropdowns.forEach(function (dropdown) {
+                    dropdown.style.display = 'none';
+                });
+            });
+
+            // Get the modal
+            var modal = document.querySelector('.add-course-form');
+
+            // Get the button that opens the modal
+            var btn = document.querySelector('.add-course-button');
+
+            // Get the element that closes the modal
+            var span = document.querySelector('.add-course-form-title i');
+            var cancelButton = document.querySelector('.add-course-form-button-cancel');
+
+            // When the user clicks the button, open the modal 
+            btn.addEventListener('click', function () {
+                modal.style.display = "block";
+            });
+
+            // When the user clicks on the close icon (x), close the modal
+            span.addEventListener('click', function () {
+                modal.style.display = "none";
+            });
+
+            // When the user clicks on cancel button, close the modal
+            cancelButton.addEventListener('click', function () {
+                modal.style.display = "none";
+            });
+
+            // Clicking outside the form should close the form
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        });
+
+
+
+    </script>
 </body>
 
 </html>

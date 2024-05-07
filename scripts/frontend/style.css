@@ -119,7 +119,7 @@ body{
 
 /* content */
 .content-block{
-    height: 92%;
+    min-height: 92%;
     background-color: white;
     border-radius: 10px;
 }

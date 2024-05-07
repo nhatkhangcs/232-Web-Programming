@@ -20,7 +20,7 @@
         <div class="sidebar shadow">
             <!-- dashboard logo -->
             <?php
-                include './component/navbar.php';
+            include './component/navbar.php';
             ?>
 
         </div>
@@ -38,7 +38,7 @@
 
                 <div class="user-avatar">
                     <?php
-                        include './component/user.php';
+                    include './component/user.php';
                     ?>
                 </div>
             </div>
@@ -77,61 +77,73 @@
                     </div>
                 </div>
                 <!-- Course block list -->
-                <div class="course-block ">
+                <div class="">
+                    <!-- Course block list -->
+                    <div class="course-block" id="courseBlock"></div>
+                    <!-- Pagination -->
+                    <!-- <div class="pagination-container" id="paginationContainer"></div> -->
                     <!-- course-item -->
-                    <?php
-                    include '../db-create/db-config.php';
+                    <script>
+                        // Call the PHP file to get search results
+                        fetch('./component/course_results.php<?php echo isset($_GET['search']) ? '?search=' . urlencode($_GET['search']) : '' ?><?php echo isset($_GET['page']) ? '&page=' . $_GET['page'] : '' ?>')
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log('DATA',data);
+                                const courseBlock = document.getElementById('courseBlock');
+                                //console.log(courseBlock);
+                                const paginationContainer = document.getElementById('paginationContainer');
+                                //console.log(paginationContainer);
 
-                    $conn = mysqli_connect($host, $username, $password, $dbname);
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error());
-                    }
+                                if (data.results.length > 0) {
+                                    // Display search results
+                                    data.results.forEach(course => {
+                                        console.log(course);
+                                        courseBlock.innerHTML += `
+                                <div class="course-item shadow" onclick="location.href=\'explore test.php?courseId=${course.courseId}\';">
+                                    <div class="course-item-title-explore">${course.name}</div>
+                                    <div class="course-item-creator">
+                                        <img src="../src/avatar.png" class="creator-image shadow">
+                                        Create by <content class="course-item-author">${course.teacher_name}</content>
+                                    </div>
+                                    <div class="course-item-total">Total Test: <content>${course.test_count}</content></div>
+                                    <div class="course-item-description">${course.description}</div>
+                                    <div class="course-item-update-time">
+                                        <i class="material-icons fs-6 mx-1">update</i> ${course.timeCreated}
+                                    </div>
+                                </div>
+                            `;
+                                    });
 
+                                    
+                                    // Display pagination controls
+                                    if (data.totalPages > 1) {
+                                        const ul = document.createElement('ul');
+                                        ul.classList.add('pagination', 'justify-content-center', 'mt-3');
 
-                    $query = "SELECT * FROM course";
-                    $result = mysqli_query($conn, $query);
+                                        for (let i = 1; i <= data.totalPages; i++) {
+                                            const li = document.createElement('li');
+                                            li.classList.add('page-item');
 
-                    // $query2 = "SELECT * FROM teacher";
-                    // $result2 = mysqli_query($conn, $query2);
-                    // $row2 = mysqli_fetch_assoc($result2);
-                    // var_dump($row2);
+                                            const a = document.createElement('a');
+                                            a.classList.add('page-link');
+                                            a.href = `?search=${encodeURIComponent('<?php echo isset($_GET['search']) ? $_GET['search'] : '' ?>')}&page=${i}`;
+                                            a.textContent = i;
 
+                                            li.appendChild(a);
+                                            ul.appendChild(li);
+                                        }
 
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $query2 = "SELECT * FROM teacher WHERE teacherId = " . $row['teacherId'];
-                            $result2 = mysqli_query($conn, $query2);
-                            $row2 = mysqli_fetch_assoc($result2);
-
-                            $sql_get_test = "SELECT COUNT(*) AS test_count FROM test WHERE courseId = " . $row['courseId'];
-                            $result_test = mysqli_query($conn, $sql_get_test);
-                            $row_test = mysqli_fetch_assoc($result_test);
-
-                            echo '<div class="course-item shadow" onclick="location.href=\'explore test.php?courseId=' . $row['courseId'] . '\';">';
-                            echo '<div class="course-item-title-explore">';
-                            echo htmlspecialchars($row['name']);
-                            echo '</div>';
-                            echo '<div class="course-item-creator"><img src="../src/avatar.png" class="creator-image shadow">
-                                    Create by <content class="course-item-author">' . htmlspecialchars($row2['name']) . '</content>
-                                </div>';
-                            echo '<div class="course-item-total">
-                                    Total Test: <content>' . $row_test['test_count'] . '</content>';
-                            echo '</div>';
-                            echo '<div class="course-item-description">' . htmlspecialchars($row['description']) . '</div>';
-                            echo '<div class="course-item-update-time">
-                                    <i class="material-icons fs-6 mx-1">update</i>'
-                                . htmlspecialchars($row['timeCreated']) .
-                                '</div>';
-                            echo '</div>';
-                        }
-                    } else {
-                        echo 'No courses found.';
-                    }
-
-                    mysqli_close($conn);
-                    ?>
+                                        paginationContainer.appendChild(ul);
+                                    }
+                                } else {
+                                    courseBlock.innerHTML = 'No courses found.';
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                    </script>
 
                 </div>
+                <div class="pagination-container" id="paginationContainer"></div>
             </div>
         </div>
     </div>

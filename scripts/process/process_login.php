@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         } else {
             // User authentication failed, redirect back to login page with error message
-            header("Location: ../frontend/login.php?error=InvalidCredentials");
+            header("Location: ../frontend/login_page.php?error=invalid");
             exit();
         }
     } catch (PDOException $e) {

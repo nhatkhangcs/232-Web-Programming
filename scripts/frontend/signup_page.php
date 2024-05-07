@@ -18,7 +18,7 @@
 <!-- <img src="../src/home_icon.png" width="15px" class="mx-auto d-block mt-5"> -->
 <div class="container">
     <div class="position-absolute top-15 start-10 pt-3">
-        <a href="./home page.php">
+        <a href="./guest_dashboard.php">
             <img src="../src/home_icon.png" width="40px" class="mx-auto d-block mt-1">
         </a>
     </div>

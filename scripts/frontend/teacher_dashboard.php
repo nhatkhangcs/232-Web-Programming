@@ -43,7 +43,22 @@
             </div>
 
             <!-- page content -->
-            <div class="content-block shadow"></div>
+            <div class="content-block shadow">
+                <div class="container ps-5 pt-5">
+                    <div class="text-primary">
+                        <p class="fw-bold fs-1 d-inline text-primary">HELLO </p>
+
+                        <?php
+                        if (isset($_SESSION['role']) && $_SESSION['role'] == 'teacher') {
+                            echo '<p class="fw-bold fs-1 d-inline"> TEACHER</p>';
+                            echo '<p class="fw-bold fs-1 d-inline"> ' . $_SESSION['teachername'] . '</p>';
+                        
+                        }
+                        ?>
+                    </div>
+                    <p class="fw-bold fs-4">Welcome back to Test Smart</p>
+                </div>
+            </div>
         </div>
     </div>
 </body>

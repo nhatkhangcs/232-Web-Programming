@@ -110,7 +110,7 @@
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)) {
 
-                            echo '<div class="course-item shadow" onclick="location.href=\'index.php?page=test-list\';">';
+                            echo '<div class="course-item shadow" onclick="onclick="location.href=\'test list.php?courseId=' . $row['courseId'] . '\';"">';
                             echo '<div class="course-item-title">';
                             echo htmlspecialchars($row['name']);
                             echo '<div class="course-item-option">';

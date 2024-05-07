@@ -32,7 +32,7 @@
         <div class="sidebar shadow">
             <!-- dashboard logo -->
             <?php
-                include './component/navbar.php';
+            include './component/navbar.php';
             ?>
 
         </div>
@@ -50,7 +50,7 @@
 
                 <div class="user-avatar">
                     <?php
-                        include './component/user.php';
+                    include './component/user.php';
                     ?>
                 </div>
             </div>
@@ -116,10 +116,7 @@
                             echo '<div class="course-item-option">';
                             echo '<i class="material-icons fs-5 ">more_horiz</i>';
                             echo '<div class="course-item-dropdown">
-                                    <form method = "POST"> 
-                                    <input type="hidden" name="course_id" value="ID_OF_THE_COURSE">
-                                    <button type="submit" name="delete_btn" class = "course-item-dropdown-option"><i class="material-icons fs-5 me-2">edit</i>edit</button>
-                                    </form>
+                                    <button type="submit" name="edit-course" class = "course-item-dropdown-option course-form-edit-button"><i class="material-icons fs-5 me-2">edit</i>edit</button>
 
                                     <form method = "POST"> 
                                     <input type="hidden" name="delete_course" value="ID_OF_THE_COURSE">
@@ -159,24 +156,58 @@
                         <div><i class="material-icons fs-3 mx-1">close</i></div>
                     </div>
                     <!-- form input -->
-                    <form action="">
+                    <form method="POST" action="../backend/teacher/createCourse.php">
+                        <input type="hidden" name="auth_key" value="your_valid_auth_key" id="your_valid_auth_key">
                         <!-- Enter course name -->
                         <div class="add-course-form-option">
                             <label for="courseName" class="form-label">Course name</label>
-                            <input type="text" id="courseName" name="courseName" placeholder="Enter course name"
+                            <input type="text" id="courseName" name="coursename" placeholder="Enter course name"
                                 class="form-control">
                         </div>
                         <!-- Enter description -->
                         <div class="add-course-form-option">
                             <label for="courseDescription" class="form-label">Description</label>
-                            <textarea id="courseDescription" name="courseDescription"
-                                placeholder="Enter course description" class="form-control"></textarea>
+                            <textarea id="courseDescription" name="description" placeholder="Enter course description"
+                                class="form-control"></textarea>
                         </div>
 
                         <!-- Form button -->
                         <div class="add-course-form-button">
                             <button class="add-course-form-button-cancel">Cancel</button>
-                            <button class="add-course-form-button-summit">Add course</button>
+                            <button type="summit" class="add-course-form-button-summit">Add course</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Edit course form -->
+            <div class="edit-course-form shadow" id="editCoursePopup">
+                <div class="add-course-form-content">
+                    <!-- form title -->
+                    <div class="add-course-form-title">
+                        Edit course
+                        <div><i class="material-icons fs-3 mx-1">close</i></div>
+                    </div>
+                    <!-- form input -->
+                    <form method="POST" action="">
+                        <input type="hidden" name="auth_key" value="your_valid_auth_key" id="your_valid_auth_key">
+                        <!-- Enter course name -->
+                        <div class="add-course-form-option">
+                            <label for="courseName" class="form-label">Course name</label>
+                            <input type="text" id="courseName" name="coursename" placeholder="Enter course name"
+                                class="form-control">
+                        </div>
+                        <!-- Enter description -->
+                        <div class="add-course-form-option">
+                            <label for="courseDescription" class="form-label">Description</label>
+                            <textarea id="courseDescription" name="description" placeholder="Enter course description"
+                                class="form-control"></textarea>
+                        </div>
+
+                        <!-- Form button -->
+                        <div class="add-course-form-button">
+                            <button class="edit-course-form-button-cancel">Cancel</button>
+                            <button type="summit" class="add-course-form-button-summit">Save course</button>
                         </div>
                     </form>
                 </div>
@@ -275,9 +306,27 @@
                         modal.style.display = "none";
                     }
                 });
+
             });
 
 
+
+            var editCourse = document.getElementsByClassName('course-form-edit-button');
+            for (var i = 0; i < editCourse.length; i++) {
+                editCourse[i].onclick = function () {
+                    showEditForm(this);
+                }
+            }
+            function showEditForm(button) {
+                var edit_course = document.getElementById('editCoursePopup');
+                edit_course.style.display = "block";
+
+                const edit_course_btn = document.querySelectorAll('.course-form-edit-button');
+                edit_course_btn.forEach(menu => {
+                    menu.classList.remove('show');
+                });
+
+            }
 
         </script>
 </body>

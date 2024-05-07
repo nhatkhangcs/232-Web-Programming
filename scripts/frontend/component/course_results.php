@@ -115,6 +115,9 @@ $response = [
 // Return the response as JSON
 echo json_encode($response);
 
+$sql = "DROP TABLE intermediate_table";
+mysqli_query($conn, $sql);
+
 // Close the database connection
 mysqli_close($conn);
 ?>

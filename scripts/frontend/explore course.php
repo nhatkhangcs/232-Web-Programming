@@ -165,6 +165,7 @@
                             })
                             .catch(error => console.error('Error:', error));
                     }
+                    searchCourses();
                 </script>
                 <div class="course-block" id="courseBlock"></div>
                 <div class="pagination-container" id="paginationContainer"></div>

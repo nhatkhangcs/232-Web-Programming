@@ -1,0 +1,1 @@
+SELECT CEIL(COUNT(*) / 4) AS totalPages FROM intermediate_table

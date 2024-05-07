@@ -49,10 +49,12 @@
                 <div class="tool-bar">
                     <!-- search-bar -->
                     <div class="search-bar">
-                        <input type="text" name="search" placeholder="Search course name or teacher name"
-                            class="search-explore-course">
-                        <button type="submit" class="search-button">
-                            <i class="material-icons">search</i></button>
+                        <input type="text" name="search" id="searchInput"
+                            placeholder="Search course name or teacher name" class="search-explore-course"
+                            onkeydown="handleSearch(event)">
+                        <button type="submit" class="search-button" onclick="searchCourses()">
+                            <i class="material-icons">search</i>
+                        </button>
                     </div>
 
                     <!-- Filter -->
@@ -76,73 +78,95 @@
                         </div>
                     </div>
                 </div>
+
+
                 <!-- Course block list -->
-                <div class="">
-                    <!-- Course block list -->
-                    <div class="course-block" id="courseBlock"></div>
-                    <!-- Pagination -->
-                    <!-- <div class="pagination-container" id="paginationContainer"></div> -->
-                    <!-- course-item -->
-                    <script>
-                        // Call the PHP file to get search results
-                        fetch('./component/course_results.php<?php echo isset($_GET['search']) ? '?search=' . urlencode($_GET['search']) : '' ?><?php echo isset($_GET['page']) ? '&page=' . $_GET['page'] : '' ?>')
+                <!-- Course block list -->
+
+                <!-- Pagination -->
+                <!-- <div class="pagination-container" id="paginationContainer"></div> -->
+                <!-- course-item -->
+                <script>
+                    function handleSearch(event) {
+                        if (event.key === "Enter") {
+                            searchCourses();
+                        }
+                    }
+
+                    function searchCourses(page = 1) {
+                        const searchQuery = document.getElementById('searchInput').value; // Retrieve search input value
+                        const url = `./component/course_results.php?search=${encodeURIComponent(searchQuery)}&page=${page}`;
+                        console.log(url);
+
+                        fetch(url)
                             .then(response => response.json())
                             .then(data => {
-                                console.log('DATA',data);
+                                console.log('DATA', data);
                                 const courseBlock = document.getElementById('courseBlock');
-                                //console.log(courseBlock);
                                 const paginationContainer = document.getElementById('paginationContainer');
-                                //console.log(paginationContainer);
-
+                                courseBlock.innerHTML = '';
                                 if (data.results.length > 0) {
                                     // Display search results
                                     data.results.forEach(course => {
-                                        console.log(course);
                                         courseBlock.innerHTML += `
-                                <div class="course-item shadow" onclick="location.href=\'explore test.php?courseId=${course.courseId}\';">
-                                    <div class="course-item-title-explore">${course.name}</div>
-                                    <div class="course-item-creator">
-                                        <img src="../src/avatar.png" class="creator-image shadow">
-                                        Create by <content class="course-item-author">${course.teacher_name}</content>
-                                    </div>
-                                    <div class="course-item-total">Total Test: <content>${course.test_count}</content></div>
-                                    <div class="course-item-description">${course.description}</div>
-                                    <div class="course-item-update-time">
-                                        <i class="material-icons fs-6 mx-1">update</i> ${course.timeCreated}
-                                    </div>
+                            <div class="course-item shadow" onclick="location.href='explore test.php?courseId=${course.courseId}';">
+                                <div class="course-item-title-explore">${course.courseName}</div>
+                                <div class="course-item-creator">
+                                    <img src="../src/avatar.png" class="creator-image shadow">
+                                    Created by <content class="course-item-author">${course.teacherName}</content>
                                 </div>
-                            `;
+                                <div class="course-item-total">Total Tests: <content>${course.test_count}</content></div>
+                                <div class="course-item-description">${course.description}</div>
+                                <div class="course-item-update-time">
+                                    <i class="material-icons fs-6 mx-1">update</i> ${course.timeCreated}
+                                </div>
+                            </div>
+                        `;
                                     });
 
-                                    
+                                    // Display pagination controls
                                     // Display pagination controls
                                     if (data.totalPages > 1) {
-                                        const ul = document.createElement('ul');
-                                        ul.classList.add('pagination', 'justify-content-center', 'mt-3');
+                                        let ul = paginationContainer.querySelector('ul.pagination');
+                                        if (!ul) {
+                                            ul = document.createElement('ul');
+                                            ul.classList.add('pagination', 'justify-content-center', 'mt-3');
+                                            paginationContainer.appendChild(ul);
+                                        } else {
+                                            ul.innerHTML = ''; // Clear existing pagination links
+                                        }
 
+                                        // Generate pagination links and append them to ul
                                         for (let i = 1; i <= data.totalPages; i++) {
                                             const li = document.createElement('li');
                                             li.classList.add('page-item');
 
                                             const a = document.createElement('a');
                                             a.classList.add('page-link');
-                                            a.href = `?search=${encodeURIComponent('<?php echo isset($_GET['search']) ? $_GET['search'] : '' ?>')}&page=${i}`;
+                                            a.href = '#'; // Prevent default link behavior
                                             a.textContent = i;
+
+                                            // Add click event listener to pagination links
+                                            a.addEventListener('click', () => {
+                                                searchCourses(i); // Call searchCourses() with the page number
+                                            });
 
                                             li.appendChild(a);
                                             ul.appendChild(li);
                                         }
-
-                                        paginationContainer.appendChild(ul);
+                                    } else {
+                                        // If there's only one page of results, ensure that no pagination links are displayed
+                                        paginationContainer.innerHTML = '';
                                     }
+
                                 } else {
                                     courseBlock.innerHTML = 'No courses found.';
                                 }
                             })
                             .catch(error => console.error('Error:', error));
-                    </script>
-
-                </div>
+                    }
+                </script>
+                <div class="course-block" id="courseBlock"></div>
                 <div class="pagination-container" id="paginationContainer"></div>
             </div>
         </div>

@@ -14,9 +14,8 @@ if (!$conn) {
 $sql = "CREATE TABLE IF NOT EXISTS TakenTest (
     takenTestId INT AUTO_INCREMENT PRIMARY KEY,
     testId INT,
-    dateTaken VARCHAR(14), -- Format: ddmmyyhhmmss
+    dateTaken TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     studentId INT,
-    takenQuestion TEXT, -- Storing question IDs as JSON array
     timeTaken INT,
     FOREIGN KEY (testId) REFERENCES Test(testId),
     FOREIGN KEY (studentId) REFERENCES Student(studentId)

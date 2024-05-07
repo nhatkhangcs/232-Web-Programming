@@ -17,8 +17,7 @@ $sql = "CREATE TABLE IF NOT EXISTS Student (
     password VARCHAR(255),
     name VARCHAR(100),
     email VARCHAR(100) UNIQUE,
-    profileImage VARCHAR(255),
-    testTaken TEXT -- Storing takentest IDs as JSON array
+    profileImage VARCHAR(255)
 )";
 
 if (mysqli_query($conn, $sql)) {
@@ -34,8 +33,7 @@ $sql = "CREATE TABLE IF NOT EXISTS Teacher (
     password VARCHAR(255),
     name VARCHAR(100),
     email VARCHAR(100) UNIQUE,
-    profileImage VARCHAR(255),
-    ownCourse TEXT -- Storing course IDs as JSON array
+    profileImage VARCHAR(255)
 )";
 
 if (mysqli_query($conn, $sql)) {

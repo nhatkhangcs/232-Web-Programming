@@ -6,6 +6,7 @@ let testData = {
 };
 let chosenOptions = {};
 let time_taken = -1;
+let fetching_error = false;
 
 function createBoxes(num) {
     var container = document.getElementById("question_box_container");
@@ -85,13 +86,18 @@ function handleSubmission() {
         return;
     }
     // Get the test ID
-    const testId = 1; // Replace '1' with the actual test ID
+    const testId = new URLSearchParams(window.location.search).get('testid');
     localStorage.removeItem(`targetTime_${testId}`);
     sendToDB(time_taken);
 };
 
 function sendToDB(timeTaken) {
     // Get the test ID
+    if (fetching_error) {
+        alert("Something went wrong. Please try again later.");
+        window.location.href = "preview_page.php?testid=" + testData.testid;
+        return;
+    }
     if (testData.studentid == -1) {
         window.location.href = "preview_page.php?testid=" + testData.testid;
         return;
@@ -124,7 +130,7 @@ function sendToDB(timeTaken) {
 
 function handleCancel() {
     // Get the test ID
-    const testId = 1; // Replace '1' with the actual test ID
+    const testId = new URLSearchParams(window.location.search).get('testid');
     localStorage.removeItem(`targetTime_${testId}`);
     const previewUrl = `preview_page.php?testid=${testId}`;
     window.location.href = previewUrl;
@@ -151,7 +157,6 @@ $(document).ready(function() {
             settimelimit = data.timelimit;
 
             var QtestId = url.searchParams.get("testid");
-            QtestId = 1;
 
             $.ajax({
                 type: 'GET',
@@ -207,11 +212,12 @@ $(document).ready(function() {
                     $('#questions').html(questionsHtml);
                 },
                 error: function(xhr, status, error) {
+                    fetching_error = true;
                     console.error('Error fetching questions data:', error);
                 }
             });
             // Set the countdown interval (in minutes)
-            const testId = 1; 
+            const testId = new URLSearchParams(window.location.search).get('testid');
             const defaultCountdownInterval = parseInt(settimelimit);
             console.log(typeof defaultCountdownInterval);
 

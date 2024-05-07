@@ -42,10 +42,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        $date = date('dmYHis');
 
         // Prepare SQL query to insert the taken test into the database
-        $sql = "INSERT INTO TakenTest (testId, studentId, dateTaken, timeTaken) VALUES ('$testid', '$studentid', '$date', '$time_taken')";
+        $sql = "INSERT INTO TakenTest (testId, studentId, timeTaken) VALUES ('$testid', '$studentid', '$time_taken')";
 
         // Execute SQL query to insert the taken test
         if (mysqli_query($conn, $sql)) {

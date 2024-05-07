@@ -77,7 +77,7 @@
                                     <i class="material-icons btn-item-icon fs-5 me-1">play_circle</i> Do test
                                     </div>
                                 </button> -->
-                                <button class="btn btn-primary mt-1" onclick="window.location.href='do_test_page.php?testid=1'"> 
+                                <button id="do-test-button" class="btn btn-primary mt-1" onclick="window.location.href='#'"> 
                                     <div class="button_content">
                                     <i class="material-icons btn-item-icon fs-5 me-1">play_circle</i> Do test
                                     </div>

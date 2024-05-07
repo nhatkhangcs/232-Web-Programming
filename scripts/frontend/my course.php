@@ -189,8 +189,9 @@
                         <div><i class="material-icons fs-3 mx-1">close</i></div>
                     </div>
                     <!-- form input -->
-                    <form method="POST" action="">
+                    <form method="POST" action="../backend/teacher/updateCourse.php">
                         <input type="hidden" name="auth_key" value="your_valid_auth_key" id="your_valid_auth_key">
+                        <input type="hidden" id="courseId" name="courseId">
                         <!-- Enter course name -->
                         <div class="add-course-form-option">
                             <label for="courseName" class="form-label">Course name</label>

@@ -1,2 +1,0 @@
-INSERT INTO intermediate_table (courseId, courseName, description, timeCreated, teacherId, teacherName) 
-                                VALUES ('5', 'Computer Science', 'Introduction to computer science', '2024-05-06 22:27:16', '4', 'Bob Brown')

@@ -1,1 +1,0 @@
-SELECT * FROM intermediate_table LIMIT 0, 4

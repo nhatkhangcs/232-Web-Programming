@@ -10,8 +10,6 @@ $resultsPerPage = 4; // Number of results per page
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1; // Current page, default to 1
 $offset = max(0, ($page - 1) * $resultsPerPage); // Calculate offset
 
-file_put_contents('debug.log', $offset);
-
 // Construct the base SQL query with column aliases
 // Check if the intermediate table already exists
 $tableExistsQuery = "SHOW TABLES LIKE 'intermediate_table'";
@@ -44,8 +42,6 @@ if (mysqli_num_rows($tableExistsResult) == 0) {
                                 VALUES ('{$row['courseId']}', '{$row['courseName']}', '{$row['description']}', '{$row['timeCreated']}', '{$row['teacherId']}', '{$row['teacherName']}')";
 
                 mysqli_query($conn, $insertQuery);
-
-                file_put_contents('debug1.log', $insertQuery);
             }
 
             //echo "Intermediate table created successfully and data inserted.";
@@ -71,8 +67,6 @@ if (isset($_GET['search']) && !empty($_GET['search'])) {
 // Add LIMIT clause for pagination
 $query .= " LIMIT $offset, $resultsPerPage";
 
-file_put_contents('debug2.log', $query);
-
 // Execute the query to get search results
 $result = mysqli_query($conn, $query);
 
@@ -80,7 +74,6 @@ $result = mysqli_query($conn, $query);
 // Fetch the total number of pages
 $totalPagesQuery = "SELECT CEIL(COUNT(*) / $resultsPerPage) AS totalPages FROM intermediate_table";
 
-file_put_contents('debug3.log', $totalPagesQuery);
 if (isset($_GET['search']) && !empty($_GET['search'])) {
     $searchTerm = mysqli_real_escape_string($conn, $_GET['search']);
     $totalPagesQuery .= " WHERE courseId LIKE '%$searchTerm%' OR courseName LIKE '%$searchTerm%' OR teacherId LIKE '%$searchTerm%' OR teacherName LIKE '%$searchTerm%'";

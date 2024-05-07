@@ -12,11 +12,11 @@ if (!$conn) {
 }
 // Sample data for the TakenTest table
 $takenTestData = array(
-    array("testId" => 1, "dateTaken" => "010124120000", "studentId" => 1, "takenQuestion" => json_encode([1, 2, 3, 4, 5]), "timeTaken" => 22),
-    array("testId" => 2, "dateTaken" => "020224130000", "studentId" => 2, "takenQuestion" => json_encode([6]), "timeTaken" => 12),
-    array("testId" => 3, "dateTaken" => "030324140000", "studentId" => 3, "takenQuestion" => json_encode([7, 8, 9]), "timeTaken" => 44),
-    array("testId" => 4, "dateTaken" => "040424150000", "studentId" => 3, "takenQuestion" => json_encode([10, 11, 12]), "timeTaken" => 15),
-    array("testId" => 5, "dateTaken" => "050524160000", "studentId" => 4, "takenQuestion" => json_encode([13, 14, 15]), "timeTaken" => 20)
+    array("testId" => 1, "dateTaken" => "010124120000", "studentId" => 1, "timeTaken" => 22),
+    array("testId" => 2, "dateTaken" => "020224130000", "studentId" => 2, "timeTaken" => 12),
+    array("testId" => 3, "dateTaken" => "030324140000", "studentId" => 3, "timeTaken" => 44),
+    array("testId" => 4, "dateTaken" => "040424150000", "studentId" => 3, "timeTaken" => 15),
+    array("testId" => 5, "dateTaken" => "050524160000", "studentId" => 4, "timeTaken" => 20)
 );
 
 // Insert sample data into the TakenTest table
@@ -25,9 +25,8 @@ foreach ($takenTestData as $takenTest) {
     $dateTaken = $takenTest['dateTaken'];
     $studentId = $takenTest['studentId'];
     $timeTaken = $takenTest['timeTaken'];
-    $takenQuestion = $takenTest['takenQuestion'];
 
-    $sql = "INSERT INTO TakenTest (testId, dateTaken, studentId, timeTaken, takenQuestion) VALUES ('$testId', '$dateTaken', '$studentId', '$timeTaken', '$takenQuestion')";
+    $sql = "INSERT INTO TakenTest (testId, dateTaken, studentId, timeTaken) VALUES ('$testId', '$dateTaken', '$studentId', '$timeTaken')";
     if (mysqli_query($conn, $sql)) {
         echo "Sample data inserted into TakenTest table successfully<br>";
     } else {

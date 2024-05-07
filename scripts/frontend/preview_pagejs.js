@@ -87,6 +87,10 @@ function exportToDOCX() {
 $(document).ready(function() {
     // Make AJAX request to get test data
     var testId = new URLSearchParams(window.location.search).get('testid');
+    document.getElementById("do-test-button").onclick = function() {
+        window.location.href = "do_test_page.php?testid=" + testId;
+    };
+
     $.ajax({
         type: 'GET',
         url: '../backend/test/getTest.php?testid=' + testId + '&auth_key=your_valid_auth_key',

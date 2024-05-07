@@ -15,7 +15,6 @@ $sql = "CREATE TABLE IF NOT EXISTS Course (
     courseId INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255),
     teacherId INT,
-    Test TEXT, -- Storing Test IDs as JSON array
     description TEXT,
     timeCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )";
@@ -33,7 +32,6 @@ $sql = "CREATE TABLE IF NOT EXISTS Test (
     name VARCHAR(255),
     courseId INT,
     description TEXT,
-    question TEXT, -- Storing question IDs as JSON array
     timeLimit INT,
     timeCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (courseId) REFERENCES Course(courseId)

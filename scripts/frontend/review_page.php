@@ -63,11 +63,11 @@
                                 Review
                             </div>
                             <div class="col text-sm-end">
-                                <button class="btn btn-primary mt-1" onclick="window.location.href='do_test_page.php?testid=1'"> 
+                                <!-- <button class="btn btn-primary mt-1" onclick="window.location.href='do_test_page.php?testid=1'"> 
                                     <div class="button_content">
                                     <i class="material-icons btn-item-icon fs-5 me-1">ios_share</i> Export
                                     </div>
-                                </button>
+                                </button> -->
                             </div>
                         </div>
                     </div>

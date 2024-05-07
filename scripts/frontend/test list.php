@@ -96,7 +96,7 @@
                 <!-- Tool bar -->
                 <div class="tool-bar">
                     <!-- course name -->
-                    <div class="tool-bar-course-name" onclick="window.location.href='index.php?page=my-course'">
+                    <div class="tool-bar-course-name" onclick="window.location.href='my course.php'">
                         <i class="material-icons">arrow_back_ios</i></button>
                         <?php
                         include '../db-create/db-config.php';
@@ -170,7 +170,14 @@
                     if (!$conn) {
                         die("Connection failed: " . mysqli_connect_error());
                     }
-                    $query = "SELECT * FROM course WHERE CourseId = 1";
+
+                    if (isset($_GET['courseId'])) {
+                        $courseId = $_GET['courseId'];
+                    } else {
+                        echo "errors data";
+                    }
+
+                    $query = "SELECT * FROM course WHERE CourseId = $courseId";
                     $result = mysqli_query($conn, $query);
 
                     if (mysqli_num_rows($result) > 0) {
@@ -226,13 +233,10 @@
                                     echo '<div class="course-item-option justify-content-center">';
                                     echo '<i class="material-icons fs-5 ">more_vert</i>';
                                     echo '<div class="course-item-dropdown">
-                                                <form method = "POST"> 
-                                                <input type="hidden" name="course_id" value="ID_OF_THE_COURSE">
                                                 <button type="submit" name="delete_btn" class = "course-item-dropdown-option"><i class="material-icons fs-5 me-2">edit</i>edit</button>
-                                                </form>
             
-                                                <form method = "POST"> 
-                                                <input type="hidden" name="delete_course" value="ID_OF_THE_COURSE">
+                                                <form method = "POST" action = "../backend/test/deleteTest/php"> 
+                                                <input type="hidden" name="delete_course" value="">
                                                 <button type="submit" class = "course-item-dropdown-option"><i class="material-icons fs-5 me-2">delete</i>Delete</button>
                                                 </form>
                                             </div>';
@@ -251,47 +255,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Add course form -->
-        <div class="add-course-form shadow">
-            <div class="add-course-form-content">
-                <!-- form title -->
-                <div class="add-course-form-title">
-                    Add a course
-                    <div><i class="material-icons fs-3 mx-1">close</i></div>
-                </div>
-                <!-- form input -->
-                <form action="">
-                    <!-- Enter course name -->
-                    <div class="add-course-form-option">
-                        <label for="courseName" class="form-label">Course name</label>
-                        <input type="text" id="courseName" name="courseName" placeholder="Enter course name"
-                            class="form-control">
-                    </div>
-                    <!-- Choose sharing type -->
-                    <div class="add-course-form-option">
-                        <label for="courseShare" class="form-label">Share</label>
-                        <select id="courseShare" name="courseShare" class="form-select">
-                            <option value="Private" class="form-control">Private</option>
-                            <option value="Public" class="form-control">Public</option>
-                        </select>
-                    </div>
-                    <!-- Enter description -->
-                    <div class="add-course-form-option">
-                        <label for="courseDescription" class="form-label">Description</label>
-                        <textarea id="courseDescription" name="courseDescription" placeholder="Enter course description"
-                            class="form-control"></textarea>
-                    </div>
-
-                    <!-- Form button -->
-                    <div class="add-course-form-button">
-                        <button class="add-course-form-button-cancel">Cancel</button>
-                        <button class="add-course-form-button-summit">Add course</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
     </div>
 
     <script>

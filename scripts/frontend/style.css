@@ -397,6 +397,7 @@ body{
     border: 1px solid #888;
     width: 80%;
     max-width: 600px;
+    border-radius: 15px;
 }
 
 .add-course-form-title{
@@ -411,6 +412,10 @@ body{
 
 .add-course-form-option{
     margin-bottom: 10px;
+}
+
+.add-course-form-option label{
+    font-size: 15px;
 }
 
 .add-course-form-button{

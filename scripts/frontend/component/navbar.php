@@ -1,3 +1,12 @@
+<script>
+    function confirmLogout() {
+        var r = confirm("Are you sure you want to log out?");
+        if (r == true) {
+            window.location.href = "../../process/logout.php";
+        }
+    }
+</script>
+
 <div class="logo-sidebar" onclick="window.location.href='index.php?page=home-page'">
     <img src="../src/logo.png" width="120px">
 </div>
@@ -66,7 +75,7 @@ if (isset($_SESSION['role'])) {
             <i class="material-icons dashboard-item-icon-2 fs-2">person</i>
             Account
         </div>
-        <div class="dashboard-item" onclick="window.location.href=\'../../process/logout.php\'">
+        <div class="dashboard-item" onclick="confirmLogout()">
             <i class="material-icons dashboard-item-icon-2 fs-2">logout</i>
             Log out
         </div>';

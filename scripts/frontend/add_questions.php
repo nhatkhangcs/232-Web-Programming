@@ -123,8 +123,8 @@
 
                 <!-- header title -->
                 <div class="header-title">
-                    <i class="material-icons dashboard-item-icon fs-2">space_dashboard</i>
-                    Dashboard
+                    <i class="material-icons dashboard-item-icon fs-2">school</i>
+                    My course
                 </div>
                 <!-- User avatar -->
                 <div class="user-avatar">
@@ -136,7 +136,7 @@
 
             <!-- page content -->
             <div class="content-block shadow">
-                <div class="content-block shadow">
+                <div class="content-block shadow px-3 pt-3">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
@@ -161,7 +161,7 @@
                     </div>
                 </div>
                 <!-- Content block for viewing added questions -->
-                <div class="content-block shadow">
+                <div class="content-block shadow px-3 pt-2">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
@@ -177,51 +177,51 @@
                     <h2>Add New Question</h2>
                     <form id="add-question-form" enctype="multipart/form-data">
                         <!-- enctype="multipart/form-data" is required for file uploads -->
-                        <div class="mb-3">
+                        <div >
                             <label for="question-popup" class="form-label">Question</label>
                             <input type="text" class="form-control" id="question-popup" name="question-popup" required>
                         </div>
-                        <div class="mb-3">
+                        <div >
                             <label for="optionA-popup" class="form-label">Option A</label>
                             <input type="text" class="form-control" id="optionA-popup" name="optionA-popup" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="optionB-popup" class="form-label">Option B</label>
                             <input type="text" class="form-control" id="optionB-popup" name="optionB-popup" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="optionC-popup" class="form-label">Option C</label>
                             <input type="text" class="form-control" id="optionC-popup" name="optionC-popup" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="optionD-popup" class="form-label">Option D</label>
                             <input type="text" class="form-control" id="optionD-popup" name="optionD-popup" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="answer-popup" class="form-label">Answer</label>
                             <select class="form-select" id="answer-popup" name="answer-popup" required>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
+                                <option value="optionA">A</option>
+                                <option value="optionB">B</option>
+                                <option value="optionC">C</option>
+                                <option value="optionD">D</option>
                             </select>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="difficulty-popup" class="form-label">Difficulty Level</label>
                             <select class="form-select" id="difficulty-popup" name="difficulty-popup" required>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
                             </select>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="image-popup" class="form-label">Image</label>
-                            <input type="file" class="form-control" id="image-popup" name="image-popup" accept="image/*"
-                                required>
+                            <input type="file" class="form-control" id="image-popup" name="image-popup" accept="image/*">
                         </div>
-                        <button type="submit" class="btn btn-primary">Add</button>
+                        <button type="submit" class="btn btn-primary">Add</button> 
+                        <button id="close-popup-btn" class="btn btn-secondary">Close</button>
                     </form>
-                    <button id="close-popup-btn" class="btn btn-secondary">Close</button>
+                    <!-- <button id="close-popup-btn" class="btn btn-secondary">Close</button> -->
                 </div>
 
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -243,10 +243,26 @@
                             // Code to submit the form data via AJAX and handle response
                         });
 
+                        // function extractFilename() {
+                        //     var filename = $('#image-popup').val().split('\\').pop();
+                        //     console.log('Filename:', filename);
+                        //     return filename;
+                        // }
+
+                        // function extractAndDisplayFilename() {
+                        //     var filename = extractFilename();
+                        //     $('#filename-display').val('Filename: ' + filename);
+                        // }
+                    
+                        // // Call the function when a file is selected
+                        // $('#image-popup').change(function() {
+                        //     extractAndDisplayFilename();
+                        // });
+
                         // Submit form inside popup to add a new question
                         $("#add-question-form").submit(function (event) {
                             event.preventDefault();
-                            console.log($("#image-popup").val());
+                            console.log($("#image-popup"));
                             // Code to submit the form data via AJAX and handle response
                             // After successful response, add the question to the question container
                             var questionHtml = "<div class='question-block'>" +
@@ -254,6 +270,7 @@
                                 "<p>Options: " + $("#optionA-popup").val() + ", " + $("#optionB-popup").val() + ", " + $("#optionC-popup").val() + ", " + $("#optionD-popup").val() + "</p>" +
                                 "<p>Answer: " + $("#answer-popup").val() + "</p>" +
                                 "<p>Difficulty: " + $("#difficulty-popup").val() + "</p>" +
+                                "<p>Image: " + $('#image-popup').val().split('\\').pop() + "</p>" +
                                 "</div>";
                             $("#question-container").append(questionHtml);
                             $("#popup").hide();
@@ -262,15 +279,42 @@
                 </script>
 
                 <script>
+                    let idx = 0;
                     $("#save-questions-btn").click(function () {
                         var questions = []; // Mảng để lưu các câu hỏi
 
                         // Lặp qua mỗi câu hỏi đã thêm
                         $(".question-block").each(function () {
                             console.log($("#question-popup").val());
-                            console.log($("#image-popup").val());
+                            console.log($("#image-popup"));
+
+                            var fileInput = $("#image-popup")[0];
+                            var file = fileInput.files[0];
+                            console.log(file);
+                            var formData = new FormData();
+                            formData.append('image', file);
+
+                            // Send the file to the server using AJAX
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', '../process/uploadfile.php', true);
+                            xhr.onload = function () {
+                                if (xhr.status === 200) {
+                                    console.log('File uploaded successfully');
+                                } else {
+                                    console.error('File upload failed');
+                                }
+                            };
+                            xhr.send(formData);
+
+
+
+                            let imagename ="";
+                            let filename = $('#image-popup').val().split('\\').pop();
+                            if (filename) {
+                                imagename = filename;
+                            }
                             var question = {
-                                image: "",
+                                image: imagename,
                                 question: $("#question-popup").val(),
                                 optionA: $("#optionA-popup").val(),
                                 optionB: $("#optionB-popup").val(),

@@ -59,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
                 // Construct the course object
                 $course = array(
+                    "courseId" => $row['courseId'], // Add the courseId to uniquely identify the course
                     "coursename" => $row['coursename'],
                     "description" => $row['description'],
                     "timeCreated" => $row['timeCreated'],

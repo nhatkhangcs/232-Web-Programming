@@ -9,12 +9,26 @@
     <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="my_course.js"
+    <?php
+    session_start();
+    if (isset($_SESSION['teacherid'])) {
+        echo 'teacherid="' . $_SESSION['teacherid'] . '"';
+    }
+    else {
+        echo 'teacherid="-1"';
+    }
+    if (isset($_SESSION['teachername'])) {
+        echo ' teachername="' . $_SESSION['teachername'] . '"';
+    }
+    ?>
+    ></script>
 </head>
 
 <body>
     <!-- database & backend -->
     <?php
-    session_start();
     include '../db-create/db-config.php';
 
     $conn = mysqli_connect($host, $username, $password, $dbname);
@@ -94,56 +108,11 @@
 
                 </div>
 
-                <div class="course-block">
+                <div class="course-block" id="course-block-list">
                     <!-- Course block list -->
-                    <?php
-                    include '../db-create/db-config.php';
+                    <!-- <div class="ms-3" id="course-block-list"></div> -->
 
-                    $conn = mysqli_connect($host, $username, $password, $dbname);
-                    if (!$conn) {
-                        die("Connection failed: " . mysqli_connect_error());
-                    }
-
-                    $query = "SELECT * FROM course WHERE teacherId = 1";
-                    $result = mysqli_query($conn, $query);
-
-                    if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)) {
-
-                            echo '<div class="course-item shadow" onclick="location.href=\'test list.php?courseId=' . $row['courseId'] . '\';">';
-                            echo '<div class="course-item-title">';
-                            echo htmlspecialchars($row['name']);
-                            echo '<div class="course-item-option">';
-                            echo '<i class="material-icons fs-5 ">more_horiz</i>';
-                            echo '<div class="course-item-dropdown">
-                                    <button type="submit" name="edit-course" class = "course-item-dropdown-option course-form-edit-button"><i class="material-icons fs-5 me-2">edit</i>edit</button>
-
-                                    <form method = "POST"> 
-                                    <input type="hidden" name="delete_course" value="ID_OF_THE_COURSE">
-                                    <button type="submit" class = "course-item-dropdown-option"><i class="material-icons fs-5 me-2">delete</i>Delete</button>
-                                    </form>
-                                </div>';
-                            echo '</div>';
-                            echo '</div>';
-                            echo '<div class="course-item-creator"><img src="../src/avatar.png" class="creator-image shadow">
-                                    Create by <content class="course-item-author">Nathaniel</content>
-                                </div>';
-                            echo '<div class="course-item-total">
-                                    Total Course: <content>' . htmlspecialchars($row['Test']) . '</content>';
-                            echo '</div>';
-                            echo '<div class="course-item-description">' . htmlspecialchars($row['description']) . '</div>';
-                            echo '<div class="course-item-update-time">
-                                    <i class="material-icons fs-6 mx-1">update</i>'
-                                . htmlspecialchars($row['timeCreated']) .
-                                '</div>';
-                            echo '</div>';
-                        }
-                    } else {
-                        echo 'No courses found.';
-                    }
-
-                    mysqli_close($conn);
-                    ?>
+                    
                 </div>
             </div>
 
@@ -156,13 +125,13 @@
                         <div><i class="material-icons fs-3 mx-1">close</i></div>
                     </div>
                     <!-- form input -->
-                    <form method="POST" action="../backend/teacher/createCourse.php">
+                    <div>
                         <input type="hidden" name="auth_key" value="your_valid_auth_key" id="your_valid_auth_key">
                         <!-- Enter course name -->
                         <div class="add-course-form-option">
                             <label for="courseName" class="form-label">Course name</label>
                             <input type="text" id="courseName" name="coursename" placeholder="Enter course name"
-                                class="form-control">
+                                class="form-control" required>
                         </div>
                         <!-- Enter description -->
                         <div class="add-course-form-option">
@@ -174,9 +143,9 @@
                         <!-- Form button -->
                         <div class="add-course-form-button">
                             <button class="add-course-form-button-cancel">Cancel</button>
-                            <button type="summit" class="add-course-form-button-summit">Add course</button>
+                            <button onclick="handleAddCourse()" class="add-course-form-button-summit">Add course</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
 
@@ -215,7 +184,9 @@
 
         </div>
 
-        <script>
+        <!-- <script src="my_course_dropdown.js"></script> -->
+
+        <!-- <script>
             //HANDLE DROPDOWN SECTION
             document.addEventListener('DOMContentLoaded', function () {
                 // Handle filter dropdowns
@@ -328,7 +299,7 @@
 
             }
 
-        </script>
+        </script> -->
 </body>
 
 </html>

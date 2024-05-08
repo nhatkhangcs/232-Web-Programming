@@ -158,28 +158,28 @@
                         <div><i class="material-icons fs-3 mx-1">close</i></div>
                     </div>
                     <!-- form input -->
-                    <form method="POST" action="../backend/teacher/updateCourse.php">
+                    <div>
                         <input type="hidden" name="auth_key" value="your_valid_auth_key" id="your_valid_auth_key">
                         <input type="hidden" id="courseId" name="courseId">
                         <!-- Enter course name -->
                         <div class="add-course-form-option">
                             <label for="courseName" class="form-label">Course name</label>
-                            <input type="text" id="courseName" name="coursename" placeholder="Enter course name"
+                            <input type="text" id="editCourseName" name="coursename" placeholder="Enter course name"
                                 class="form-control">
                         </div>
                         <!-- Enter description -->
                         <div class="add-course-form-option">
                             <label for="courseDescription" class="form-label">Description</label>
-                            <textarea id="courseDescription" name="description" placeholder="Enter course description"
+                            <textarea id="editCourseDescription" name="description" placeholder="Enter course description"
                                 class="form-control"></textarea>
                         </div>
 
                         <!-- Form button -->
                         <div class="add-course-form-button">
-                            <button class="edit-course-form-button-cancel">Cancel</button>
-                            <button type="summit" class="add-course-form-button-summit">Save course</button>
+                            <button onclick="handleCancelEditCourse()" class="edit-course-form-button-cancel">Cancel</button>
+                            <button onclick="handleEditCourse()" type="summit" class="add-course-form-button-summit">Save course</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
 

@@ -96,9 +96,13 @@ function handle_dropdown() {
 
 var editCourse = document.getElementsByClassName('course-form-edit-button');
 for (var i = 0; i < editCourse.length; i++) {
-    editCourse[i].onclick = function () {
+    editCourse[i].addEventListener('click', function () {
+        // Call the existing onclick function, if any
+        if (this.onclick) {
+        }
+        // Call the new function
         showEditForm(this);
-    }
+    });
 }
 function showEditForm(button) {
     var edit_course = document.getElementById('editCoursePopup');
@@ -114,6 +118,8 @@ function showEditForm(button) {
 
 const teacherId = parseInt(document.currentScript.getAttribute('teacherid'));
 const teacherName = document.currentScript.getAttribute('teachername');
+
+let updateId = -1;
 
 function fetchCourse() {
     // let teacherId = parseInt(document.currentScript.getAttribute('teacherid'));
@@ -135,7 +141,7 @@ function fetchCourse() {
                         <div class="course-item-option">
                             <i class="material-icons fs-5">more_horiz</i>
                             <div class="course-item-dropdown">
-                                <button type="submit" name="edit-course" class="course-item-dropdown-option course-form-edit-button">
+                                <button onclick="setUpdateId(${course.courseId})" name="edit-course" class="course-item-dropdown-option course-form-edit-button">
                                     <i class="material-icons fs-5 me-2">edit</i>edit
                                 </button>
                                 <div> 
@@ -213,4 +219,47 @@ function handleDeleteCourse(courseId) {
             }
         });
     }
+}
+
+function setUpdateId(id) {
+    updateId = id;
+    console.log(updateId);
+}
+
+function handleEditCourse() {
+    if (updateId === -1) {
+        alert('Something went wrong. Please try again later');
+        return;
+    }
+    let courseName = $('#editCourseName').val();
+    let courseDescription = $('#editCourseDescription').val();
+    console.log(courseName, courseDescription);
+    let auth_key = 'your_valid_auth_key';
+    if (courseName == '' || courseDescription == '') {
+        $('#editCoursePopup').hide();
+        return;
+    }
+    $.ajax({
+        type: 'PUT',
+        url: `../backend/teacher/updateCourse.php?courseid=${updateId}&auth_key=${auth_key}`,
+        data: {
+            courseid: updateId,
+            auth_key: auth_key,
+            update_attribute: {
+                name: courseName,
+                description: courseDescription
+            },
+        },
+        success: function(data) {
+            console.log(data);
+            fetchCourse();
+            $('#editCourseName').val('');
+            $('#editCourseDescription').val('');
+            $('#editCoursePopup').hide();
+        }
+    });
+}
+
+function handleCancelEditCourse() {
+    $('#editCoursePopup').hide();
 }

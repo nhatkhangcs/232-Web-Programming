@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
         // Extract the parameters from the request body
         $auth_key = $_PUT['auth_key'];
         $courseid = $_PUT['courseid'];
-        $update_attribute = json_decode($_PUT['update_attribute'], true);
+        $update_attribute = ($_PUT['update_attribute']);
 
         // Check if the auth_key is valid (you should implement your own authentication mechanism)
         // For example, you can compare the auth_key with a stored key in your database or a predefined key

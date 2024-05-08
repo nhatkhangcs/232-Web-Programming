@@ -21,6 +21,13 @@
         echo ' teachername="' . $_SESSION['teachername'] . '"';
     }
     ?>></script>
+    <script src="show_test_list.js" <?php
+    if (isset($_GET['courseId'])) {
+        echo 'courseid="' . $_GET['courseId'] . '"';
+    } else {
+        echo 'courseid="-1"';
+    }
+    ?>></script>
 </head>
 
 <body>
@@ -180,53 +187,9 @@
                                 <th>Duaration</th>
                                 <th></th>
                             </tr>
-                            </>
-                        <tbody>
-                            <?php
-                            include '../db-create/db-config.php';
-
-                            $conn = mysqli_connect($host, $username, $password, $dbname);
-                            if (!$conn) {
-                                die("Connection failed: " . mysqli_connect_error());
-                            }
-
-                            $query = "SELECT * FROM test WHERE courseId = $courseId";
-                            $result = mysqli_query($conn, $query);
-
-                            if (mysqli_num_rows($result) > 0) {
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    echo '<tr class="list-item">
-                                    <td>
-                                        <div class="d-flex .align-item-center">
-                                            <i class="material-icons me-2" style="color: #4D5FFF;">description</i>'
-                                        . htmlspecialchars($row['description']) .
-                                        '</div>
-                                    </td>
-                                    <td>' . htmlspecialchars($row['timeCreated']) . '</td>
-                                    <td>' . htmlspecialchars($row['question']) . '</td>
-                                    <td>' . htmlspecialchars($row['timeLimit']) . '</td>
-                                    <td>
-                                        <div class="text-start">';
-                                    echo '<div class="course-item-option justify-content-center">';
-                                    echo '<i class="material-icons fs-5 ">more_vert</i>';
-                                    echo '<div class="course-item-dropdown">
-                                                <button type="submit" name="delete_btn" class = "course-item-dropdown-option"><i class="material-icons fs-5 me-2">edit</i>edit</button>
-            
-                                                <form method = "POST" action = "../backend/test/deleteTest/php"> 
-                                                <input type="hidden" name="delete_course" value="">
-                                                <button type="submit" class = "course-item-dropdown-option"><i class="material-icons fs-5 me-2">delete</i>Delete</button>
-                                                </form>
-                                            </div>';
-                                    echo '</div>';
-                                    echo '</div> </td>';
-                                    echo '</tr>';
-                                }
-                            } else {
-                                echo 'No test found.';
-                            }
-
-                            mysqli_close($conn);
-                            ?>
+                        </thead>
+                        <tbody id="test-list-body">
+                            
                         </tbody>
                     </table>
                 </div>
@@ -234,7 +197,7 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         //HANDLE DROPDOWN SECTION
         document.addEventListener('DOMContentLoaded', function () {
             // Handle filter dropdowns
@@ -332,7 +295,7 @@
 
 
 
-    </script>
+    </script> -->
 </body>
 
 </html>

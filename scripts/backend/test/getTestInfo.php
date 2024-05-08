@@ -60,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
                 // Construct the test information
                 $test_info = array(
+                    "testid" => $testid,
                     "testname" => $row['testname'],
                     "description" => $row['description'],
                     "timeCreated" => $row['timeCreated'],

@@ -38,6 +38,25 @@ if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
             exit();
         }
 
+        // delete all question inside
+        $sql = "SELECT questionId FROM Question WHERE testId = $testid";
+        $result = mysqli_query($conn, $sql);
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $questionid = $row['questionId'];
+                // delete all taken question
+                $sql_delete_taken_question = "DELETE FROM TakenQuestion WHERE questionId = $questionid";
+                mysqli_query($conn, $sql_delete_taken_question);
+
+                $sql_delete_question = "DELETE FROM Question WHERE questionId = $questionid";
+                mysqli_query($conn, $sql_delete_question);
+            }
+        }
+
+        // delete all taken test
+        $sql_delete_taken_test = "DELETE FROM TakenTest WHERE testId = $testid";
+        mysqli_query($conn, $sql_delete_taken_test);
+
         // Prepare SQL query to delete the test from the database
         $sql = "DELETE FROM Test WHERE testId = $testid";
 

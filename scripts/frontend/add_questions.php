@@ -199,18 +199,18 @@
                         <div class="mb-3">
                             <label for="answer-popup" class="form-label">Answer</label>
                             <select class="form-select" id="answer-popup" name="answer-popup" required>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
+                                <option value="optionA">A</option>
+                                <option value="optionB">B</option>
+                                <option value="optionC">C</option>
+                                <option value="optionD">D</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="difficulty-popup" class="form-label">Difficulty Level</label>
                             <select class="form-select" id="difficulty-popup" name="difficulty-popup" required>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
+                                <option value="Easy">Easy</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Hard">Hard</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Add</button>
@@ -261,15 +261,16 @@
 
                         // Lặp qua mỗi câu hỏi đã thêm
                         $(".question-block").each(function () {
-                            console.log($(this).find("#question-popup"))
+                            console.log($("#question-popup").val())
                             var question = {
-                                question: $(this).find("#question-popup").val(),
-                                optionA: $(this).find("#optionA-popup").val(),
-                                optionB: $(this).find("#optionB-popup").val(),
-                                optionC: $(this).find("#optionC-popup").val(),
-                                optionD: $(this).find("#optionD-popup").val(),
-                                answer: $(this).find("#answer-popup").val(),
-                                difficulty: $(this).find("#difficulty-popup").val()
+                                image: "",
+                                question: $("#question-popup").val(),
+                                optionA: $("#optionA-popup").val(),
+                                optionB: $("#optionB-popup").val(),
+                                optionC: $("#optionC-popup").val(),
+                                optionD: $("#optionD-popup").val(),
+                                answer: $("#answer-popup").val(),
+                                difficulty: $("#difficulty-popup").val()
                             };
 
                             questions.push(question); // Thêm câu hỏi vào mảng
@@ -305,11 +306,13 @@
                             },
                             success: function (response) {
                                 // Handle response from server
-                                if (response.success) {
+                                let newresponse = JSON.parse(response);
+                                console.log(newresponse);
+                                if (newresponse.success) {
                                     alert("Test created successfully."); // Display success message
-                                    window.location.href = "test list.php"; // Redirect to test_list.php
+                                    window.location.href = `test list.php?courseId=${courseId}`; // Redirect to test_list.php
                                 } else {
-                                    alert("Failed to create test. Please try again."); // Display error message
+                                    console.log(newresponse.error); // Log error message
                                 }
                             },
                             error: function (xhr, status, error) {

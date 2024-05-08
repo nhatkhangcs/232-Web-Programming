@@ -7,6 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the required parameters are set in the request body
     if (isset($_POST['auth_key']) && isset($_POST['courseid']) && isset($_POST['testname']) && isset($_POST['description']) && isset($_POST['timelimit']) && isset($_POST['question'])) {
         // Extract the parameters from the request body
+        file_put_contents('log.txt', print_r($_POST, true));
         $auth_key = $_POST['auth_key'];
         $courseid = $_POST['courseid'];
         $testname = $_POST['testname'];

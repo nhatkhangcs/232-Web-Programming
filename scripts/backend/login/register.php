@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $role = $_POST['role'];
 
         // Hash the password
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $hashed_password = md5($password);
 
         // Check if the username is unique within its corresponding table
         $table_name = $role; // Assuming table names are capitalized

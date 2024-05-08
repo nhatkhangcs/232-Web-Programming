@@ -123,11 +123,19 @@
                     </div>
 
                     <!-- Add course -->
-                    <button class="add-test-button">+ Add test</button>
+                    <button class="add-test-button" id="add-test-button">+ Add test</button>
                     <div class="d-flex me-3">
                         <i class="material-icons">more_horiz</i></button>
                     </div>
-
+                    <script>
+                        document.getElementById("add-test-button").addEventListener("click", function () {
+                            // Redirect to add_questions.php
+                            var urlParams = new URLSearchParams(window.location.search);
+                            console.log(urlParams);
+                            var courseId = urlParams.get('courseId');
+                            window.location.href = `add_questions.php?courseId=${courseId}`;
+                        });
+                    </script>
                 </div>
 
                 <!-- course description -->
@@ -159,7 +167,6 @@
                     }
                     mysqli_close($conn);
                     ?>
-
                 </div>
 
                 <!-- list table -->
@@ -173,7 +180,7 @@
                                 <th>Duaration</th>
                                 <th></th>
                             </tr>
-                        </thead>
+                            </>
                         <tbody>
                             <?php
                             include '../db-create/db-config.php';
@@ -296,6 +303,9 @@
             // Get the element that closes the modal
             var span = document.querySelector('.add-course-form-title i');
             var cancelButton = document.querySelector('.add-course-form-button-cancel');
+
+    //         test%20list.php?courseId=1:266  Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')
+    // at HTMLDocument.<anonymous> (test%20list.php?courseId=1:266:17)
 
             // When the user clicks the button, open the modal 
             btn.addEventListener('click', function () {

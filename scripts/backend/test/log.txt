@@ -1,0 +1,9 @@
+Array
+(
+    [auth_key] => your_valid_auth_key
+    [courseid] => 1
+    [testname] => fe
+    [description] => fe
+    [timelimit] => 12
+    [question] => [{}]
+)

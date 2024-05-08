@@ -72,19 +72,19 @@ function handleDropdown() {
         var cancelButton = document.querySelector('.add-course-form-button-cancel');
 
         // When the user clicks the button, open the modal 
-        btn.addEventListener('click', function () {
-            modal.style.display = "block";
-        });
+        // btn.addEventListener('click', function () {
+        //     modal.style.display = "block";
+        // });
 
-        // When the user clicks on the close icon (x), close the modal
-        span.addEventListener('click', function () {
-            modal.style.display = "none";
-        });
+        // // When the user clicks on the close icon (x), close the modal
+        // span.addEventListener('click', function () {
+        //     modal.style.display = "none";
+        // });
 
-        // When the user clicks on cancel button, close the modal
-        cancelButton.addEventListener('click', function () {
-            modal.style.display = "none";
-        });
+        // // When the user clicks on cancel button, close the modal
+        // cancelButton.addEventListener('click', function () {
+        //     modal.style.display = "none";
+        // });
 
         // Clicking outside the form should close the form
         window.addEventListener('click', function (event) {
@@ -129,10 +129,10 @@ function showTestList() {
                                         <i class="material-icons fs-5 ">more_vert</i>
                                         <div class="course-item-dropdown">
                                             <button type="submit" name="delete_btn" class="course-item-dropdown-option"><i class="material-icons fs-5 me-2">edit</i>edit</button>
-                                            <form method="POST" action="../backend/test/deleteTest.php"> 
-                                                <input type="hidden" name="delete_course" value="${test.id}">
-                                                <button type="submit" class="course-item-dropdown-option"><i class="material-icons fs-5 me-2">delete</i>Delete</button>
-                                            </form>
+                                            <div> 
+                                                <input type="hidden" name="delete_course" value="${test.testid}">
+                                                <button onclick="handleDeleteTest(${test.testid})" class="course-item-dropdown-option"><i class="material-icons fs-5 me-2">delete</i>Delete</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -153,3 +153,23 @@ function showTestList() {
 
 }
 showTestList();
+
+function handleDeleteTest(testid) {
+    let auth_key = 'your_valid_auth_key'
+    console.log(testid);
+    if (!confirm('Are you sure you want to delete this test?')) {
+        return;
+    }
+    $.ajax({
+        type: 'DELETE',
+        url: `../backend/test/deleteTest.php?testid=${testid}&auth_key=${auth_key}`,
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
+            showTestList();
+        },
+        error: function (data) {
+            console.log("error",data);
+        }
+    });
+}

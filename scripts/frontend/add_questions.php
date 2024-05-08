@@ -175,7 +175,8 @@
                 <!-- Popup window for adding a new question -->
                 <div id="popup" class="popup">
                     <h2>Add New Question</h2>
-                    <form id="add-question-form">
+                    <form id="add-question-form" enctype="multipart/form-data">
+                        <!-- enctype="multipart/form-data" is required for file uploads -->
                         <div class="mb-3">
                             <label for="question-popup" class="form-label">Question</label>
                             <input type="text" class="form-control" id="question-popup" name="question-popup" required>
@@ -199,22 +200,26 @@
                         <div class="mb-3">
                             <label for="answer-popup" class="form-label">Answer</label>
                             <select class="form-select" id="answer-popup" name="answer-popup" required>
-                                <option value="optionA">A</option>
-                                <option value="optionB">B</option>
-                                <option value="optionC">C</option>
-                                <option value="optionD">D</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="difficulty-popup" class="form-label">Difficulty Level</label>
                             <select class="form-select" id="difficulty-popup" name="difficulty-popup" required>
-                                <option value="Easy">Easy</option>
-                                <option value="Medium">Medium</option>
-                                <option value="Hard">Hard</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="image-popup" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="image-popup" name="image-popup" accept="image/*"
+                                required>
+                        </div>
                         <button type="submit" class="btn btn-primary">Add</button>
-
                     </form>
                     <button id="close-popup-btn" class="btn btn-secondary">Close</button>
                 </div>
@@ -241,6 +246,7 @@
                         // Submit form inside popup to add a new question
                         $("#add-question-form").submit(function (event) {
                             event.preventDefault();
+                            console.log($("#image-popup").val());
                             // Code to submit the form data via AJAX and handle response
                             // After successful response, add the question to the question container
                             var questionHtml = "<div class='question-block'>" +
@@ -261,7 +267,8 @@
 
                         // Lặp qua mỗi câu hỏi đã thêm
                         $(".question-block").each(function () {
-                            console.log($("#question-popup").val())
+                            console.log($("#question-popup").val());
+                            console.log($("#image-popup").val());
                             var question = {
                                 image: "",
                                 question: $("#question-popup").val(),

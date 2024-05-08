@@ -4,6 +4,6 @@ Array
     [courseid] => 1
     [testname] => 1
     [description] => 1
-    [timelimit] => 10
-    [question] => [{"image":"","question":"1","optionA":"1","optionB":"1","optionC":"1","optionD":"1","answer":"optionA","difficulty":"Easy"}]
+    [timelimit] => 1
+    [question] => [{"image":"","question":"1","optionA":"1","optionB":"1","optionC":"1","optionD":"1","answer":"B","difficulty":"1"},{"image":"","question":"1","optionA":"1","optionB":"1","optionC":"1","optionD":"1","answer":"B","difficulty":"1"},{"image":"","question":"1","optionA":"1","optionB":"1","optionC":"1","optionD":"1","answer":"B","difficulty":"1"}]
 )

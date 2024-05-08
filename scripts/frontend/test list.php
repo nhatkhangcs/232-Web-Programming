@@ -9,6 +9,18 @@
     <link rel="stylesheet" type="text/css" href="./style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script <?php
+    session_start();
+    if (isset($_SESSION['teacherid'])) {
+        echo 'teacherid="' . $_SESSION['teacherid'] . '"';
+    } else {
+        echo 'teacherid="-1"';
+    }
+    if (isset($_SESSION['teachername'])) {
+        echo ' teachername="' . $_SESSION['teachername'] . '"';
+    }
+    ?>></script>
 </head>
 
 <body>
@@ -19,55 +31,15 @@
     if (!$conn) {
         die("Connection failed: " . mysqli_connect_error());
     }
-    // include 'backend/test/createTest.php';
-    // include 'backend/test/deleteTest.php';
-    // include 'backend/test/updateTest.php';
     ?>
-
 
     <div class="page-container">
         <!-- sidebar -->
         <div class="sidebar shadow">
             <!-- dashboard logo -->
-            <div class="logo-sidebar" onclick="window.location.href='index.php?page=home-page'">
-                <img src="../src/logo.png" width="120px">
-            </div>
-
-            <!-- dashboard -->
-            <div class="dashboard-item" onclick="window.location.href='index.php?page=dashboard'">
-                <i class="material-icons dashboard-item-icon fs-2">space_dashboard</i>
-                Dashboard
-            </div>
-
-            <!-- course -->
-            <div class="dashboard-item" onclick="window.location.href='index.php?page=my-course'">
-                <i class="material-icons dashboard-item-icon fs-2">school</i>
-                My course
-            </div>
-
-            <!-- explore -->
-            <div class="dashboard-item" onclick="window.location.href='index.php?page=explore-course'">
-                <i class="material-icons dashboard-item-icon fs-2">travel_explore</i>
-                Explore
-            </div>
-
-            <!-- history -->
-            <div class="dashboard-item">
-                <i class="material-icons dashboard-item-icon-2 fs-2">history</i>
-                History
-            </div>
-
-            <!-- account -->
-            <div class="dashboard-item">
-                <i class="material-icons dashboard-item-icon-2 fs-2">person</i>
-                Account
-            </div>
-
-            <!-- log out -->
-            <div class="dashboard-item">
-                <i class="material-icons dashboard-item-icon-2 fs-2">logout</i>
-                Log out
-            </div>
+            <?php
+            include './component/navbar.php';
+            ?>
 
         </div>
 
@@ -83,11 +55,9 @@
                 </div>
 
                 <div class="user-avatar">
-                    <img src="../src/avatar.png" class="avatar-image shadow">
-                    <div class="user-avatar-text">
-                        <div class="user-avatar-name">Nathaniel</div>
-                        <div class="user-avatar-role">Teacher</div>
-                    </div>
+                    <?php
+                    include './component/user.php';
+                    ?>
                 </div>
             </div>
 
@@ -213,7 +183,7 @@
                                 die("Connection failed: " . mysqli_connect_error());
                             }
 
-                            $query = "SELECT * FROM test WHERE courseId = 1";
+                            $query = "SELECT * FROM test WHERE courseId = $courseId";
                             $result = mysqli_query($conn, $query);
 
                             if (mysqli_num_rows($result) > 0) {
